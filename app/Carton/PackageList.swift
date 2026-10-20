@@ -23,6 +23,7 @@ struct PackageList: View {
                     List {
                         ForEach(parcels) { p in
                             NavigationLink(value: p) { Row(parcel: p) }
+                                .macCard()
                                 .contextMenu {
                                     Button(archive ? "Unarchive" : "Archive") { store.setArchived(p, !archive) }
                                     Button("Delete", role: .destructive) { store.remove(p) }
@@ -37,6 +38,7 @@ struct PackageList: View {
                         }
                     }
                     .cartonList()
+                    .macListGround()
                 }
             }
             .navigationTitle(archive ? "Archive" : "Carton")

@@ -48,7 +48,13 @@ final class Store {
     var active: [Parcel] { parcels.filter { !$0.isArchived } }
     var archived: [Parcel] { parcels.filter(\.isArchived) }
 
+    /// Sample packages for App Store screenshots (-demo, debug builds only). Never saved, never refreshed.
+    private(set) var isDemo = false
+
     init() {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-demo") { loadDemo(); return }
+        #endif
         if let d = UserDefaults.standard.data(forKey: key), let p = try? JSONDecoder().decode([Parcel].self, from: d) { parcels = p }
         // iCloud key-value sync: same list on every device signed into the same Apple Account
         NotificationCenter.default.addObserver(forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: cloud, queue: .main) { [weak self] _ in
@@ -59,6 +65,30 @@ final class Store {
         let args = ProcessInfo.processInfo.arguments  // QA hook: -add <url or number>
         if let i = args.firstIndex(of: "-add"), i + 1 < args.count { add(args[i + 1]) }
     }
+
+    #if DEBUG
+    private func loadDemo() {
+        isDemo = true
+        let day = { (n: Int) in Calendar.current.date(byAdding: .day, value: n, to: .now)! }
+        let steps = { (current: Int) in ["Label Created", "We Have Your Package", "On the Way", "Out for Delivery", "Delivery"].enumerated().map {
+            Step(name: $0.element, state: $0.offset < current ? "completed" : $0.offset == current ? "active" : "inactive") } }
+        // UPS's published sample number pattern; none of these are real shipments
+        let demo: [(String, String, String, Int, Int, String)] = [
+            ("1Z999AA10123456784", "Coffee grinder", "Out for Delivery", 0, 3, "Portland, OR"),
+            ("1Z999AA10123456785", "Running shoes", "On the Way", 2, 2, "Louisville, KY"),
+            ("1Z999AA10123456786", "Book", "On the Way", 7, 2, "Ontario, CA"),
+            ("1Z999AA10123456787", "Desk lamp", "We Have Your Package", 9, 1, "Hodgkins, IL"),
+        ]
+        parcels = demo.map { Parcel(number: $0.0, name: $0.1) } + [Parcel(number: "1Z999AA10123456788", name: "Headphones", archived: true)]
+        for d in demo {
+            let f = DateFormatter(); f.dateFormat = "EEEE, MMMM d"
+            statuses[d.0] = Status(number: d.0, status: d.2, eta: d.3 == 0 ? "Today, by 8:00 P.M." : f.string(from: day(d.3)) + ", 9:00 A.M. - 1:00 P.M.",
+                                   etaDate: day(d.3), delivered: false, lastLocation: d.5, service: "UPS® Ground", shipTo: "SEATTLE, WA US", steps: steps(d.4))
+        }
+        statuses["1Z999AA10123456788"] = Status(number: "1Z999AA10123456788", status: "Delivered", eta: "Monday, 10/12/2026 at 2:14 P.M.",
+                                                etaDate: day(-8), delivered: true, lastLocation: "Seattle, WA", service: "UPS® Ground", shipTo: "SEATTLE, WA US", steps: steps(5))
+    }
+    #endif
 
     /// Accepts a bare number or a pasted tracking link.
     static func parse(_ text: String) -> String? {
@@ -107,6 +137,7 @@ final class Store {
     }
 
     func refresh(_ n: String) async {
+        guard !isDemo else { return }
         do {
             statuses[n] = try await UPSPage().fetch(n)
             errors[n] = nil
@@ -116,6 +147,7 @@ final class Store {
     }
 
     func save() {
+        guard !isDemo else { return }
         let d = try? JSONEncoder().encode(parcels)
         UserDefaults.standard.set(d, forKey: key)
         if syncOn { cloud.set(d, forKey: key) }

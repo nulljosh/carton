@@ -42,6 +42,24 @@ extension View {
         #endif
     }
 
+    /// Mac rows as separate cards, the way iPhone's grouped list reads.
+    func macCard() -> some View {
+        #if os(macOS)
+        listRowSeparator(.hidden)
+            .listRowBackground(RoundedRectangle(cornerRadius: 12).fill(Color(nsColor: .controlBackgroundColor)).padding(.vertical, 4).padding(.horizontal, 8))
+        #else
+        self
+        #endif
+    }
+
+    func macListGround() -> some View {
+        #if os(macOS)
+        scrollContentBackground(.hidden).background(Color(nsColor: .windowBackgroundColor))
+        #else
+        self
+        #endif
+    }
+
     func inlineTitle() -> some View {
         #if os(iOS)
         navigationBarTitleDisplayMode(.inline)
