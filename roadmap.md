@@ -3,7 +3,7 @@
 One number first: days until it shows up. Everything below serves that.
 
 ## To v1.0 (the loop works this list)
-- [ ] v0.9 App Store record: probe the name Carton, create the iOS and Mac record (needs Joshua's yes), upload
+- [ ] v0.9 Name: store record is Cartons (Carton taken). Rename the app, repo and site to match, or pick another name. Then signed archive and upload
 - [ ] v1.0 Submitted for review on iOS and Mac
 
 ## v1 to v10: the tracker people keep
