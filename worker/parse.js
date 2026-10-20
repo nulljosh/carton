@@ -8,7 +8,9 @@ const DATE_LABELS = ["estimated delivery", "scheduled delivery", "delivered on",
 export const isNotFound = (text) => /could not locate the shipment|tracking number is invalid|unable to find/i.test(text);
 
 export function parse(text, number) {
-  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
+  // UPS's icons render as words in the text (check_circle, chevron_right, help): drop them first
+  const ICONS = new Set(["help", "close", "check", "lock", "info", "search", "menu"]);
+  const lines = text.split("\n").map((l) => l.replace(/\b[a-z]+(?:_[a-z]+)+\b/g, "").trim()).filter((l) => l && !ICONS.has(l));
   const lower = lines.map((l) => l.toLowerCase());
   const squash = (s) => s.replace(/ /g, "").toUpperCase();
   if (!lines.some((l) => squash(l) === squash(number))) return null;
@@ -26,7 +28,7 @@ export function parse(text, number) {
       if (j < 0) continue;
       const rest = lines[j].slice(label.length).replace(/^[:\s]+/, "").trim();
       if (rest) return rest;
-      const next = lines.slice(j + 1).find((l) => l.toLowerCase() !== "help");
+      const next = lines[j + 1];
       if (next) return next;
     }
     return null;

@@ -43,7 +43,11 @@ final class UPSPage: NSObject {
 
     /// Pulls status, ETA and last scan out of the page text. Nil until the result has rendered.
     nonisolated static func parse(_ text: String, number: String) -> Status? {
-        let lines = text.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+        // UPS's icons render as words in the text (check_circle, chevron_right, help): drop them first
+        let icons: Set<String> = ["help", "close", "check", "lock", "info", "search", "menu"]
+        let lines = text.split(separator: "\n")
+            .map { $0.replacingOccurrences(of: "\\b[a-z]+(?:_[a-z]+)+\\b", with: "", options: .regularExpression).trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty && !icons.contains($0) }
         let lower = lines.map { $0.lowercased() }
         let squash = { (s: String) in s.replacingOccurrences(of: " ", with: "").uppercased() }
         // the result has rendered once our number and a date label are both on the page
@@ -63,7 +67,7 @@ final class UPSPage: NSObject {
                 guard let j = lower.firstIndex(where: { $0.hasPrefix(label) }) else { continue }
                 let rest = lines[j].dropFirst(label.count).trimmingCharacters(in: CharacterSet(charactersIn: ": "))
                 if !rest.isEmpty { return rest }
-                if let next = lines[(j + 1)...].first(where: { $0.lowercased() != "help" }) { return next }
+                if let next = lines[(j + 1)...].first { return next }
             }
             return nil
         }

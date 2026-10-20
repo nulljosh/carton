@@ -51,6 +51,11 @@ struct ParseCheck {
         assert(d.delivered && d.status == "Delivered")
         assert(Calendar.current.component(.month, from: d.etaDate!) == 10)
 
+        // icon names leak into the text as words
+        let icons = "Delivered check_circle\n\(n)\nDelivered On\ncheck_circle\nMonday, 10/12/2026 at 2:14 P.M.\nchevron_right\nhelp"
+        let ic = UPSPage.parse(icons, number: n)!
+        assert(ic.status == "Delivered" && ic.eta == "Monday, 10/12/2026 at 2:14 P.M.", "\(ic.status) / \(ic.eta ?? "nil")")
+
         // still loading: nothing yet
         assert(UPSPage.parse("Tracking Details\nLoading", number: n) == nil)
         assert(UPSPage.isNotFound("We could not locate the shipment details for this tracking number."))

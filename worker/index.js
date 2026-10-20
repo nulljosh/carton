@@ -7,8 +7,25 @@ const json = (o, status = 200) => new Response(JSON.stringify(o), {
   status, headers: { "content-type": "application/json", "cache-control": status === 200 ? "public, max-age=900" : "no-store" },
 });
 
+/** Reuses an idle warm browser session when one exists; the free plan allows only a few new browsers a minute.
+ *  A session just released can take a moment to show as idle, so a refused launch waits and looks again. */
+async function getBrowser(env) {
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const idle = (await puppeteer.sessions(env.BROWSER)).filter((s) => !s.connectionId).map((s) => s.sessionId);
+    for (const id of idle) {
+      try { return await puppeteer.connect(env.BROWSER, id); } catch {}
+    }
+    try {
+      return await puppeteer.launch(env.BROWSER, { keep_alive: 600000 });  // stays warm 10 minutes for the next lookup
+    } catch (e) {
+      if (!/429/.test(String(e.message)) || attempt === 3) throw e;
+      await new Promise((r) => setTimeout(r, 1500));
+    }
+  }
+}
+
 async function track(env, number) {
-  const browser = await puppeteer.launch(env.BROWSER);
+  const browser = await getBrowser(env);
   try {
     const page = await browser.newPage();
     await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15");
@@ -27,7 +44,9 @@ async function track(env, number) {
       if (i === 39) return { error: "UPS didn't answer.", status: 504, sample: text.slice(0, 300) };
     }
   } finally {
-    await browser.close();
+    // close our tab, leave the browser running for the next visitor
+    for (const p of await browser.pages()) await p.close().catch(() => {});
+    browser.disconnect();
   }
 }
 
@@ -39,6 +58,8 @@ export default {
     const cache = caches.default;  // 15 minute cache keeps browser minutes down
     const hit = await cache.match(req);
     if (hit) return hit;
+    const ip = req.headers.get("cf-connecting-ip") || "unknown";
+    if (env.LIMITER && !(await env.LIMITER.limit({ key: ip })).success) return json({ error: "Slow down a little and try again in a minute." }, 429);
     try {
       const r = await track(env, m[1].toUpperCase());
       if (r.error) return json(r, r.status);

@@ -15,6 +15,9 @@ assert.equal(parse(onTheWay.replace("Tracking Details\nOn the Way\n", "Tracking 
 assert.deepEqual(parse(`${n}\nEstimated delivery\nTomorrow\nDelivery\ninactive\nOn the Way\nactive\nLabel Created\ncompleted`, n).steps.map((x) => x.name), ["Label Created", "On the Way", "Delivery"]);
 const d = parse(`Delivered\n${n}\nDelivered On: Tuesday, 10/27/2026 at 11:02 A.M.`, n);
 assert.ok(d.delivered && d.etaDate === "2026-10-27");
+const ic = parse(`Delivered check_circle\n${n}\nDelivered On\ncheck_circle\nMonday, 10/12/2026 at 2:14 P.M.\nchevron_right\nhelp`, n);
+assert.equal(ic.status, "Delivered");
+assert.equal(ic.eta, "Monday, 10/12/2026 at 2:14 P.M.");
 assert.equal(parse("Tracking Details\nLoading", n), null);
 assert.ok(isNotFound("We could not locate the shipment details for this tracking number."));
 assert.equal(day("Friday, January 2", new Date(2026, 11, 30)), "2027-01-02");
