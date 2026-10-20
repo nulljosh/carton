@@ -1,4 +1,4 @@
-// The Carton web app: a list of UPS numbers in localStorage, each read through /api/track.
+// The Cartons web app: a list of UPS numbers in localStorage, each read through /api/track.
 const KEY = "carton.parcels";
 const $ = (id) => document.getElementById(id);
 const parseNumber = (t) => (t.match(/1Z[0-9A-Za-z]{16}/) || [])[0]?.toUpperCase() || null;
@@ -51,7 +51,7 @@ async function refresh(n) {
     const r = await fetch(`/api/track/${n}`);
     const j = await r.json();
     state[n] = r.ok ? j : { error: j.error || "UPS didn't answer." };
-  } catch { state[n] = { error: "Can't reach Carton right now." }; }
+  } catch { state[n] = { error: "Can't reach Cartons right now." }; }
   render();
 }
 
@@ -64,7 +64,7 @@ $("add").onsubmit = (e) => {
   refresh(n);
 };
 
-// carton.jaybulb.com/#1Z... adds that package; the hash never leaves the browser
+// cartons.jaybulb.com/#1Z... adds that package; the hash never leaves the browser
 const fromHash = parseNumber(decodeURIComponent(location.hash));
 if (fromHash && !parcels.includes(fromHash)) { parcels.unshift(fromHash); save(); }
 if (fromHash) history.replaceState(null, "", location.pathname);

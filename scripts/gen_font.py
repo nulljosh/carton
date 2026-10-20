@@ -1,10 +1,10 @@
-"""Carton Sans: Inter (rsms/inter, SIL Open Font License 1.1), renamed.
+"""Cartons Sans: Inter (rsms/inter, SIL Open Font License 1.1), renamed.
 A plain screen sans between San Francisco, Helvetica and Lato, which is the brief (Joshua, 2026-10-20: "just basic
 sans serif"). Figures are proportional by default. Same method as Quip Sans and Samantha Sans: pinned release,
 renamed, OFL shipped beside the fonts, original copyright kept in the name table. Latin only, same bytes every build.
 
-    uv run --with fonttools --with brotli scripts/gen_font.py           # fonts/CartonSans-{Regular,Medium,Semibold,Bold}.{ttf,woff2} + OFL.txt
-    uv run --with fonttools --with brotli scripts/gen_font.py --check   # named Carton Sans, OFL present, proportional, I l 1 O 0 distinct
+    uv run --with fonttools --with brotli scripts/gen_font.py           # fonts/CartonsSans-{Regular,Medium,Semibold,Bold}.{ttf,woff2} + OFL.txt
+    uv run --with fonttools --with brotli scripts/gen_font.py --check   # named Cartons Sans, OFL present, proportional, I l 1 O 0 distinct
 """
 import io
 import os
@@ -26,9 +26,9 @@ def fetch(path):
 
 
 def rename(font, style):
-    """Give the outlines the Carton Sans name; copyright (0) and license (13, 14) stay as the authors wrote them."""
-    names = {1: "Carton Sans", 2: style, 3: f"CartonSans-{style}", 4: f"Carton Sans {style}",
-             5: "Version 1.000", 6: f"CartonSans-{style}", 16: "Carton Sans", 17: style}
+    """Give the outlines the Cartons Sans name; copyright (0) and license (13, 14) stay as the authors wrote them."""
+    names = {1: "Cartons Sans", 2: style, 3: f"CartonsSans-{style}", 4: f"Cartons Sans {style}",
+             5: "Version 1.000", 6: f"CartonsSans-{style}", 16: "Cartons Sans", 17: style}
     table = font["name"]
     table.names = [n for n in table.names if n.nameID in (0, 13, 14)]
     for nid, text in names.items():
@@ -50,8 +50,8 @@ def check():
     assert os.path.exists(os.path.join(OUT, "OFL.txt")), "the OFL must ship with the fonts"
     for style in WEIGHTS:
         for ext in ("ttf", "woff2"):
-            f = TTFont(os.path.join(OUT, f"CartonSans-{style}.{ext}"))
-            assert f["name"].getDebugName(1) == "Carton Sans" and f["name"].getDebugName(6) == f"CartonSans-{style}"
+            f = TTFont(os.path.join(OUT, f"CartonsSans-{style}.{ext}"))
+            assert f["name"].getDebugName(1) == "Cartons Sans" and f["name"].getDebugName(6) == f"CartonsSans-{style}"
             assert f["name"].getDebugName(0), "the original copyright must stay in the name table"
             cmap = f.getBestCmap()
             assert all(ord(c) in cmap for c in "0123456789CARTONdays"), "missing glyphs the app uses"
@@ -62,7 +62,7 @@ def check():
             assert hmtx[cmap[ord("i")]][0] < hmtx[cmap[ord("m")]][0], "letters are not proportional"
             glyf = f["glyf"]
             assert len({glyf[cmap[ord(c)]].coordinates.array.tobytes() for c in "0123456789"}) == 10, "two digits drawn the same"
-    print(f"font ok: Carton Sans (Inter, OFL), {len(WEIGHTS)} weights")
+    print(f"font ok: Cartons Sans (Inter, OFL), {len(WEIGHTS)} weights")
 
 
 def main():
@@ -75,9 +75,9 @@ def main():
         font = TTFont(io.BytesIO(fetch(f"files/inter-latin-{weight}-normal.woff2")))
         rename(font, style)
         for ext, flavor in (("ttf", None), ("woff2", "woff2")):
-            with open(os.path.join(OUT, f"CartonSans-{style}.{ext}"), "wb") as f:
+            with open(os.path.join(OUT, f"CartonsSans-{style}.{ext}"), "wb") as f:
                 f.write(to_bytes(font, flavor))
-        print(f"CartonSans-{style}: Inter {weight}")
+        print(f"CartonsSans-{style}: Inter {weight}")
 
 
 if __name__ == "__main__":

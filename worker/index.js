@@ -1,4 +1,4 @@
-// Carton web: serves the landing page and web app from web/, and reads UPS tracking pages at /api/track/<number>.
+// Cartons web: serves the landing page and web app from web/, and reads UPS tracking pages at /api/track/<number>.
 // ups.com blocks plain fetches, so a real headless Chrome (Cloudflare Browser Rendering) loads the page like a person.
 import puppeteer from "@cloudflare/puppeteer";
 import { parse, isNotFound } from "./parse.js";
@@ -53,6 +53,10 @@ async function track(env, number) {
 export default {
   async fetch(req, env, ctx) {
     const url = new URL(req.url);
+    if (url.hostname === "carton.jaybulb.com") {  // old name, kept as a redirect
+      url.hostname = "cartons.jaybulb.com";
+      return Response.redirect(url.toString(), 301);
+    }
     const m = url.pathname.match(/^\/api\/track\/(1Z[0-9A-Z]{16})$/i);
     if (!m) return env.ASSETS.fetch(req);
     const cache = caches.default;  // 15 minute cache keeps browser minutes down

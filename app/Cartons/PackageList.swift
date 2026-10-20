@@ -41,7 +41,7 @@ struct PackageList: View {
                     .macListGround()
                 }
             }
-            .navigationTitle(archive ? "Archive" : "Carton")
+            .navigationTitle(archive ? "Archive" : "Cartons")
             .navigationDestination(for: Parcel.self) { Detail(parcel: $0) }
             .toolbar { if !archive { Button("Add", systemImage: "plus") { adding = true } } }
             .sheet(isPresented: $adding) { AddSheet() }

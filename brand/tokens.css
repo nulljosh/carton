@@ -1,10 +1,10 @@
-/* Carton design tokens. One source for the landing page and the web app; the Swift app mirrors
+/* Cartons design tokens. One source for the landing page and the web app; the Swift app mirrors
    the same values in Brand.swift. Everything sits on an 8 point grid. The palette comes off the
    icon: kraft board, packing tape, label paper and stamp ink. */
-@font-face { font-family: "Carton Sans"; font-weight: 400; font-display: swap; src: url("/fonts/CartonSans-Regular.woff2") format("woff2"); }
-@font-face { font-family: "Carton Sans"; font-weight: 500; font-display: swap; src: url("/fonts/CartonSans-Medium.woff2") format("woff2"); }
-@font-face { font-family: "Carton Sans"; font-weight: 600; font-display: swap; src: url("/fonts/CartonSans-Semibold.woff2") format("woff2"); }
-@font-face { font-family: "Carton Sans"; font-weight: 700; font-display: swap; src: url("/fonts/CartonSans-Bold.woff2") format("woff2"); }
+@font-face { font-family: "Cartons Sans"; font-weight: 400; font-display: swap; src: url("/fonts/CartonsSans-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Cartons Sans"; font-weight: 500; font-display: swap; src: url("/fonts/CartonsSans-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Cartons Sans"; font-weight: 600; font-display: swap; src: url("/fonts/CartonsSans-Semibold.woff2") format("woff2"); }
+@font-face { font-family: "Cartons Sans"; font-weight: 700; font-display: swap; src: url("/fonts/CartonsSans-Bold.woff2") format("woff2"); }
 
 :root {
   /* color */
@@ -20,8 +20,8 @@
   --border: rgba(92, 58, 26, .14);
   --accent: var(--kraft-deep);
 
-  /* type: Carton Sans (Inter, renamed) everywhere, system sans as the fallback */
-  --font: "Carton Sans", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* type: Cartons Sans (Inter, renamed) everywhere, system sans as the fallback */
+  --font: "Cartons Sans", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --size-hero: 72px;         /* wordmark, Bold, -0.03em */
   --size-countdown: 34px;    /* days left, Semibold */
   --size-large-title: 34px;

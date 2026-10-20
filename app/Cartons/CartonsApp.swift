@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CartonApp: App {
+struct CartonsApp: App {
     @State private var store = Store()
 
     init() { Brand.registerFonts() }
