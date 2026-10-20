@@ -3,6 +3,8 @@ import SwiftUI
 @main
 struct CartonApp: App {
     @State private var store = Store()
+
+    init() { Brand.registerFonts() }
     @State private var tab = ProcessInfo.processInfo.arguments.firstIndex(of: "-tab").map { Int(ProcessInfo.processInfo.arguments[$0 + 1]) ?? 0 } ?? 0  // QA hook: -tab 2
 
     var body: some Scene {
@@ -13,6 +15,7 @@ struct CartonApp: App {
                 SettingsView().tabItem { Label("Settings", systemImage: "gearshape") }.tag(2)
             }
             .environment(store)
+            .font(.carton(.body))
             .tint(Brand.accent)
         }
     }

@@ -9,6 +9,11 @@ struct Parcel: Codable, Identifiable, Hashable {
     var isArchived: Bool { archived ?? false }
 }
 
+struct Step: Hashable {
+    var name: String
+    var state: String  // completed, active or inactive
+}
+
 struct Status {
     var number: String
     var status: String
@@ -18,6 +23,7 @@ struct Status {
     var lastLocation: String?
     var service: String?
     var shipTo: String?
+    var steps: [Step] = []
 
     /// Whole days from today to the ETA, nil when UPS gave none.
     var daysLeft: Int? {
@@ -68,6 +74,12 @@ final class Store {
         }
         Task { await refresh(n) }
         return true
+    }
+
+    func rename(_ p: Parcel, _ name: String) {
+        guard let i = parcels.firstIndex(where: { $0.number == p.number }) else { return }
+        parcels[i].name = name.trimmingCharacters(in: .whitespaces)
+        save()
     }
 
     func setArchived(_ p: Parcel, _ on: Bool) {

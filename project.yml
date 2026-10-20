@@ -6,7 +6,12 @@ targets:
   Carton:
     type: application
     platform: iOS
-    sources: [app/Carton, Carton.icon]
+    sources:
+      - app/Carton
+      - Carton.icon
+      - path: fonts
+        includes: ["*.ttf"]
+        buildPhase: resources
     entitlements:
       path: app/Carton.entitlements
       properties:

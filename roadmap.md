@@ -3,7 +3,6 @@
 One number first: days until it shows up. Everything below serves that.
 
 ## To v1.0 (the loop works this list)
-- [ ] v0.6 Carton Sans in the app, package detail with a scan timeline, rename packages
 - [ ] v0.7 Mac app from the same sources
 - [ ] v0.8 Icon as Icon Composer layers so liquid glass lights the box; dark and tinted variants
 - [ ] v0.9 App Store prep: probe the name, record, screenshots, privacy labels, review notes

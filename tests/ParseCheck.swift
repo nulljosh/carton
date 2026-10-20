@@ -34,10 +34,16 @@ struct ParseCheck {
         assert(Calendar.current.component(.day, from: s.etaDate!) == 27)
         assert(s.lastLocation?.hasPrefix("Hodgkins") == true && s.shipTo == "LANGLEY, BC CA" && s.service == "UPS® Standard")
         assert(!s.delivered)
+        assert(s.steps.map(\.name) == ["Label Created", "We Have Your Package", "On the Way", "Out for Delivery"])
+        assert(s.steps.map(\.state) == ["completed", "completed", "active", "inactive"])
 
         // mobile layout: no status line before the number, headline found via the active step
         let mobile = onTheWay.replacingOccurrences(of: "Tracking Details\nOn the Way\n", with: "Tracking Details\n")
         assert(UPSPage.parse(mobile, number: n)?.status == "On the Way")
+
+        // phone layout lists steps last first
+        let flipped = "\(n)\nEstimated delivery\nTomorrow\nDelivery\ninactive\nOn the Way\nactive\nLabel Created\ncompleted"
+        assert(UPSPage.parse(flipped, number: n)!.steps.map(\.name) == ["Label Created", "On the Way", "Delivery"])
 
         // delivered, date on the same line as its label
         let done = "Delivered\n\(n)\nDelivered On: Tuesday, 10/27/2026 at 11:02 A.M.\nShip To\nLANGLEY, BC CA"

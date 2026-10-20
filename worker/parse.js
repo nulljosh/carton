@@ -32,7 +32,11 @@ export function parse(text, number) {
     return null;
   };
   const eta = delivered ? value(["delivered on", "delivery date", "delivered"]) : value(["estimated delivery", "scheduled delivery", "delivery date"]);
-  return { number, status, eta, etaDate: eta ? day(eta) : null, delivered,
+  const steps = lines.slice(0, -1).map((name, i) => ({ name, state: lower[i + 1] }))
+    .filter((st) => ["completed", "active", "inactive"].includes(st.state));
+  // the phone layout lists them last step first; always read first step first
+  if (steps[0]?.state === "inactive" || (steps.at(-1)?.state === "completed" && steps[0]?.state !== "completed")) steps.reverse();
+  return { steps, number, status, eta, etaDate: eta ? day(eta) : null, delivered,
     lastLocation: value(["last location"]), service: value(["service"]), shipTo: value(["ship to"]) };
 }
 

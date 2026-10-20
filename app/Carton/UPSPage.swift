@@ -68,8 +68,12 @@ final class UPSPage: NSObject {
             return nil
         }
         let eta = delivered ? value(["delivered on", "delivery date", "delivered"]) : value(["estimated delivery", "scheduled delivery", "delivery date"])
+        // the progress bar: each step name is followed by its state
+        var steps = zip(lines, lower.dropFirst()).filter { ["completed", "active", "inactive"].contains($0.1) }.map { Step(name: $0.0, state: $0.1) }
+        // the phone layout lists them last step first; always read first step first
+        if steps.first?.state == "inactive" || steps.last?.state == "completed" && steps.first?.state != "completed" { steps.reverse() }
         return Status(number: number, status: status, eta: eta, etaDate: eta.flatMap { day($0) }, delivered: delivered,
-                      lastLocation: value(["last location"]), service: value(["service"]), shipTo: value(["ship to"]))
+                      lastLocation: value(["last location"]), service: value(["service"]), shipTo: value(["ship to"]), steps: steps)
     }
 
     /// "Tuesday, October 27 , 9:30 A.M.", "10/27/2026", "Today" or "Tomorrow" -> that day.
