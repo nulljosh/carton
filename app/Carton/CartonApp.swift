@@ -18,5 +18,8 @@ struct CartonApp: App {
             .font(.carton(.body))
             .tint(Brand.accent)
         }
+        #if os(macOS)
+        .defaultSize(width: 520, height: 760)
+        #endif
     }
 }

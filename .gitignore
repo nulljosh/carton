@@ -3,3 +3,4 @@ build.log
 *.xcodeproj
 .wrangler/
 node_modules/
+build-mac.log

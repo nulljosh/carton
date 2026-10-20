@@ -1,6 +1,8 @@
 import CoreText
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
+#endif
 
 /// Mirrors brand/tokens.css.
 enum Brand {
@@ -13,9 +15,11 @@ enum Brand {
                 CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
             }
         }
+        #if os(iOS)
         let nav = UINavigationBar.appearance()
         if let big = UIFont(name: "CartonSans-Bold", size: 34) { nav.largeTitleTextAttributes = [.font: UIFontMetrics(forTextStyle: .largeTitle).scaledFont(for: big)] }
         if let small = UIFont(name: "CartonSans-Semibold", size: 17) { nav.titleTextAttributes = [.font: UIFontMetrics(forTextStyle: .headline).scaledFont(for: small)] }
+        #endif
     }
 }
 
@@ -25,5 +29,34 @@ extension Font {
         let base: CGFloat = size ?? [.largeTitle: 34, .title: 28, .title2: 22, .title3: 20, .headline: 17, .body: 17,
                                      .callout: 16, .subheadline: 15, .footnote: 13, .caption: 12, .caption2: 11][style] ?? 17
         return .custom("CartonSans-\(weight)", size: base, relativeTo: style)
+    }
+}
+
+extension View {
+    /// Inset grouped on iPhone, inset on Mac (which has no grouped style).
+    func cartonList() -> some View {
+        #if os(iOS)
+        listStyle(.insetGrouped)
+        #else
+        listStyle(.inset(alternatesRowBackgrounds: false))
+        #endif
+    }
+
+    func inlineTitle() -> some View {
+        #if os(iOS)
+        navigationBarTitleDisplayMode(.inline)
+        #else
+        self
+        #endif
+    }
+}
+
+enum Clipboard {
+    static var string: String? {
+        #if os(iOS)
+        UIPasteboard.general.string
+        #else
+        NSPasteboard.general.string(forType: .string)
+        #endif
     }
 }

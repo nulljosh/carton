@@ -23,6 +23,10 @@ struct PackageList: View {
                     List {
                         ForEach(parcels) { p in
                             NavigationLink(value: p) { Row(parcel: p) }
+                                .contextMenu {
+                                    Button(archive ? "Unarchive" : "Archive") { store.setArchived(p, !archive) }
+                                    Button("Delete", role: .destructive) { store.remove(p) }
+                                }
                                 .swipeActions(edge: .trailing) {
                                     Button("Delete", systemImage: "trash", role: .destructive) { store.remove(p) }
                                     Button(archive ? "Unarchive" : "Archive", systemImage: archive ? "tray.and.arrow.up" : "archivebox") {
@@ -32,7 +36,7 @@ struct PackageList: View {
                                 }
                         }
                     }
-                    .listStyle(.insetGrouped)
+                    .cartonList()
                 }
             }
             .navigationTitle(archive ? "Archive" : "Carton")
@@ -134,9 +138,9 @@ struct Detail: View {
                 Link("Open on ups.com", destination: URL(string: "https://www.ups.com/track?tracknum=\(parcel.number)")!)
             }
         }
-        .listStyle(.insetGrouped)
+        .cartonList()
         .navigationTitle(current.name.isEmpty ? "Package" : current.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineTitle()
         .toolbar { Button("Rename", systemImage: "pencil") { newName = current.name; renaming = true } }
         .alert("Name this package", isPresented: $renaming) {
             TextField("Book, shoes, anything", text: $newName)
@@ -158,12 +162,15 @@ struct AddSheet: View {
         NavigationStack {
             Form {
                 TextField("Tracking number or link", text: $text)
-                    .textInputAutocapitalization(.characters).autocorrectionDisabled()
+                    .autocorrectionDisabled()
+                    #if os(iOS)
+                    .textInputAutocapitalization(.characters)
+                    #endif
                 TextField("Name (optional)", text: $name)
                 if bad { Text("That doesn't look like a UPS tracking number.").foregroundStyle(.red) }
             }
             .navigationTitle("Add package")
-            .navigationBarTitleDisplayMode(.inline)
+            .inlineTitle()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
@@ -171,7 +178,7 @@ struct AddSheet: View {
                 }
             }
             .onAppear {  // clipboard detect
-                if let c = UIPasteboard.general.string, Store.parse(c) != nil { text = c }
+                if let c = Clipboard.string, Store.parse(c) != nil { text = c }
             }
         }
         .presentationDetents([.medium])
