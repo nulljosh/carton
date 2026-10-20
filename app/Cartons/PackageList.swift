@@ -49,6 +49,7 @@ struct PackageList: View {
             .task {
                 // QA hook: -open shows the first package
                 if !archive, ProcessInfo.processInfo.arguments.contains("-open"), let first = parcels.first { path = [first] }
+                if !archive, ProcessInfo.processInfo.arguments.contains("-addsheet") { adding = true }  // QA hook
                 await store.refreshAll()
             }
         }

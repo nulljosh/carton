@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>Cartons Brand</title>
+<meta name="description" content="The Cartons brand kit: icon, colour, type and components.">
+<link rel="icon" href="/favicon-32.png">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: var(--size-body)/24px var(--font); -webkit-font-smoothing: antialiased; }
+  main { max-width: 880px; margin: 0 auto; padding: var(--s7) var(--page); }
+  header { display: flex; align-items: center; gap: var(--s4); }
+  header img { width: 64px; height: 64px; border-radius: var(--r-icon); box-shadow: var(--shadow); }
+  h1 { font-size: var(--size-large-title); line-height: 41px; margin: 0; letter-spacing: -0.02em; }
+  header p { margin: 0; color: var(--ink2); }
+  h2 { font-size: var(--size-title); line-height: 28px; margin: var(--s7) 0 var(--s4); }
+  p.lead { color: var(--ink2); margin: 0 0 var(--s4); max-width: var(--measure); }
+  .icons img { width: 100%; border-radius: var(--r-card); display: block; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--s4); }
+  .sw { background: var(--card); border-radius: var(--r-group); overflow: hidden; box-shadow: var(--shadow); }
+  .sw div { height: 88px; }
+  .sw p { margin: 0; padding: var(--s3) var(--s4); font-size: var(--size-subhead); line-height: 20px; }
+  .sw small { display: block; color: var(--ink2); font-variant-numeric: tabular-nums; }
+  .type { background: var(--card); border-radius: var(--r-card); padding: var(--s5); box-shadow: var(--shadow); }
+  .type .w700 { font-weight: 700; font-size: clamp(44px, 11vw, 56px); line-height: 1.05; letter-spacing: -0.03em; }
+  .type .w600 { font-weight: 600; font-size: clamp(24px, 6vw, 34px); color: var(--accent); }
+  .type .w500 { font-weight: 500; font-size: 22px; }
+  .type .w400 { font-weight: 400; color: var(--ink2); }
+  .type > * + * { margin-top: var(--s3); }
+  .row { display: flex; align-items: center; gap: var(--s4); background: var(--card); border-radius: var(--r-group); padding: var(--s4) var(--s5); box-shadow: var(--shadow); max-width: 420px; }
+  .row .meta { flex: 1; } .row b { display: block; } .row span { color: var(--ink2); font-size: var(--size-subhead); }
+  .days { text-align: center; color: var(--accent); min-width: 48px; } .days b { display: block; font-size: 34px; line-height: 36px; font-weight: 600; } .days span { display: block; font-size: var(--size-footnote); line-height: 16px; color: var(--accent); }
+  .controls { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s4); }
+  .btn { height: var(--control); padding: 0 var(--s5); border-radius: var(--r-pill); border: 0; background: var(--accent); color: #fff; font: 600 var(--size-body) var(--font); }
+  .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--border); }
+  .field { height: var(--control); padding: 0 var(--s5); border-radius: var(--r-pill); border: 1px solid var(--border); background: var(--card); color: var(--ink2); display: inline-flex; align-items: center; min-width: 260px; }
+  ul.rules { padding-left: 20px; color: var(--ink2); } ul.rules li { margin: var(--s2) 0; }
+  footer { margin-top: var(--s8); color: var(--ink2); font-size: var(--size-footnote); }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="/icon.png" alt="Cartons icon">
+    <div><h1>Cartons brand</h1><p>The box is the brand. Days first, details second.</p></div>
+  </header>
+
+  <h2>Icon</h2>
+  <p class="lead">The whole tile is a kraft carton: tape over the seam, a shipping label, corrugated grain. Built in Icon Composer as three layers, with glass on the tape and label. Light, dark and tinted.</p>
+  <div class="icons"><img src="/brand/icon-variants.png" alt="The Cartons icon in light, dark and tinted renditions"></div>
+
+  <h2 id="colour">Colour</h2>
+  <p class="lead">Taken off the box. Pages stay mostly white; brown is for the box, the route and actions.</p>
+  <div class="swatches">
+    <div class="sw"><div style="background:#c88f55"></div><p>Kraft<small>#c88f55</small></p></div>
+    <div class="sw"><div style="background:#e8bd86"></div><p>Kraft light<small>#e8bd86</small></p></div>
+    <div class="sw"><div style="background:#8c5a2c"></div><p>Kraft deep<small>#8c5a2c · actions</small></p></div>
+    <div class="sw"><div style="background:#f0d39d"></div><p>Tape<small>#f0d39d</small></p></div>
+    <div class="sw"><div style="background:#fdfbf7;border-bottom:1px solid var(--border)"></div><p>Paper<small>#fdfbf7</small></p></div>
+    <div class="sw"><div style="background:#2b1a0b"></div><p>Ink<small>#2b1a0b</small></p></div>
+  </div>
+
+  <h2 id="type">Type</h2>
+  <p class="lead">Cartons Sans, a plain screen sans (Inter, OFL, renamed). Proportional figures.</p>
+  <div class="type">
+    <div class="w700">Cartons</div>
+    <div class="w600">7 days · 1 day · 11 days</div>
+    <div class="w500">On the Way · Last scan Louisville, KY</div>
+    <div class="w400">Paste the number or the whole link from your shipping email. 0123456789</div>
+  </div>
+
+  <h2 id="components">Components</h2>
+  <p class="lead">An 8 point grid, 48 point capsule controls, one radius set, one shadow.</p>
+  <div class="row"><div class="meta"><b>Running shoes</b><span>On the Way</span></div><div class="days"><b>2</b><span>days</span></div></div>
+  <div class="controls"><span class="field">UPS number or link</span><button class="btn">Track</button><button class="btn ghost">Open on UPS</button></div>
+
+  <h2>Voice</h2>
+  <ul class="rules">
+    <li>Say the date, say the days, stop.</li>
+    <li>"7 days" beats "Your package is estimated to arrive in approximately one week."</li>
+    <li>No accounts, no ads, nothing to sign up for. Say so plainly.</li>
+  </ul>
+
+  <footer><a href="/">Back to Cartons</a> · <a href="https://github.com/nulljosh/cartons/blob/main/brand/BRAND.md">BRAND.md</a></footer>
+</main>
+</body>
+</html>
