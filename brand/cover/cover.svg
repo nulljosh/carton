@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1200" viewBox="0 0 2400 1200">
+<defs>
+<linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfbf7"/><stop offset="1" stop-color="#f4eee4"/></linearGradient>
+<linearGradient id="lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fb8c9"/><stop offset="1" stop-color="#86a3b8"/></linearGradient>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 .3  0 0 0 0 .18  0 0 0 0 .05  0 0 0 .12 0"/></filter>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="2400" height="1200" fill="url(#paper)"/>
+<!-- faint graticule -->
+<g stroke="#b9925c" stroke-opacity=".12" stroke-width="2" fill="none">
+<path d="M0 300 Q1200 250 2400 300M0 560 Q1200 510 2400 560M0 820 Q1200 770 2400 820"/>
+<path d="M300 0 Q280 600 320 1200M800 0 Q790 600 810 1200M1300 0 Q1300 600 1310 1200M1800 0 Q1810 600 1800 1200"/>
+</g>
+<!-- 49th parallel, the border -->
+<path d="M0 470 L1400 470 Q1500 470 1560 540 Q1640 600 1760 620" stroke="#a07a48" stroke-opacity=".35" stroke-width="3" stroke-dasharray="2 10" fill="none"/>
+<!-- stylized lakes (Superior, Michigan) and the coast -->
+<path d="M1560 430 C1640 380 1820 380 1900 420 C1940 440 1880 470 1800 466 C1720 462 1640 470 1580 462 Z" fill="url(#lake)" opacity=".85"/>
+<path d="M1880 500 C1900 560 1890 700 1860 760 C1840 790 1820 760 1830 700 C1840 640 1850 560 1880 500 Z" fill="url(#lake)" opacity=".85"/>
+<path d="M0 0 H120 C150 160 90 300 140 420 C180 520 110 640 150 780 C180 900 120 1040 140 1200 H0 Z" fill="url(#lake)" opacity=".7"/>
+<!-- the route: Langley, BC to Hodgkins, IL -->
+<path id="route" d="M300 520 C700 600 1000 640 1300 680 C1500 706 1700 740 1880 790" stroke="#8c5a2c" stroke-width="10" stroke-linecap="round" stroke-dasharray="4 26" fill="none"/>
+<g fill="#fff"><circle cx="300" cy="520" r="54" fill="#fff" opacity=".5" filter="url(#glow)"/><circle cx="300" cy="520" r="22" stroke="#8c5a2c" stroke-width="8"/>
+<circle cx="1880" cy="790" r="54" fill="#fff" opacity=".5" filter="url(#glow)"/><circle cx="1880" cy="790" r="22" stroke="#8c5a2c" stroke-width="8"/></g>
+<!-- the box, partway along -->
+<g transform="translate(1120 652) scale(.16)">
+<path d="M0 0 H910 L800 340 H0 Z" fill="#e3b47c"/><path d="M0 340 H800 V1024 H0 Z" fill="#c08650"/><path d="M800 340 L910 0 H1024 V1024 H800 Z" fill="#8f5c2f"/>
+<path d="M330 340 H470 L580 0 H440 Z" fill="#f6dfb4"/><path d="M330 340 H470 V600 H330 Z" fill="#ecd0a0"/>
+<rect x="512" y="664" width="250" height="240" rx="12" fill="#fbfaf5"/>
+</g>
+<g font-family="-apple-system, Helvetica, sans-serif" font-weight="600" fill="#5c3a1a">
+<text x="300" y="610" font-size="44" text-anchor="middle">Langley, BC</text>
+<text x="1880" y="880" font-size="44" text-anchor="middle">Hodgkins, IL</text>
+</g>
+<rect width="2400" height="1200" filter="url(#grain)"/>
+</svg>

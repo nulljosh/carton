@@ -1,0 +1,13 @@
+name: test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parser check
+        run: tests/run.sh
+      - name: Font check
+        run: |
+          python3 -m venv /tmp/v && /tmp/v/bin/pip install --quiet fonttools brotli
+          /tmp/v/bin/python scripts/gen_font.py --check
