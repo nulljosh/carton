@@ -3,7 +3,6 @@
 One number first: days until it shows up. Everything below serves that.
 
 ## To v1.0 (the loop works this list)
-- [ ] v0.8 Icon as Icon Composer layers so liquid glass lights the box; dark and tinted variants
 - [ ] v0.9 Mac layout polish (cards like iOS, a sidebar on wide windows). App Store prep: probe the name, record, screenshots, privacy labels, review notes
 - [ ] v1.0 Submitted for review on iOS and Mac
 

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+<linearGradient id="top" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#8a6238"/><stop offset="1" stop-color="#a2733f"/></linearGradient>
+<linearGradient id="front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a5229"/><stop offset="1" stop-color="#5c3b1c"/></linearGradient>
+<linearGradient id="side" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a3a1b"/><stop offset="1" stop-color="#3f2710"/></linearGradient>
+<linearGradient id="tape" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f0d39d" stop-opacity=".92"/><stop offset=".5" stop-color="#fbe7c2" stop-opacity=".95"/><stop offset="1" stop-color="#ecca8e" stop-opacity=".92"/></linearGradient>
+<linearGradient id="tapef" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9c68c" stop-opacity=".95"/><stop offset="1" stop-color="#d8b071" stop-opacity=".95"/></linearGradient>
+<linearGradient id="ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1f08" stop-opacity=".22"/><stop offset="1" stop-color="#3a1f08" stop-opacity="0"/></linearGradient>
+<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="3" seed="9"/><feColorMatrix values="0 0 0 0 .22  0 0 0 0 .12  0 0 0 0 .04  0 0 0 .16 0"/></filter>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10"/></filter>
+</defs>
+<!-- faces -->
+<path d="M0 0 H910 L800 340 H0 Z" fill="url(#top)"/>
+<path d="M0 340 H800 V1024 H0 Z" fill="url(#front)"/>
+<path d="M800 340 L910 0 H1024 V1024 H800 Z" fill="url(#side)"/>
+<!-- corrugation flutes on the side -->
+<g stroke="#5c3714" stroke-opacity=".12" stroke-width="3"><path d="M840 230V1024M880 110V1024M920 0V1024M960 0V1024M1000 0V1024"/></g>
+<!-- flap seam on top, under tape -->
+<path d="M400 340 L510 0" stroke="#7d4e22" stroke-opacity=".5" stroke-width="6"/>
+<!-- creased edges -->
+<path d="M0 340 H800" stroke="#b58a55" stroke-opacity=".9" stroke-width="6"/>
+<path d="M800 340 V1024" stroke="#9b7040" stroke-opacity=".6" stroke-width="5"/>
+<path d="M800 340 L910 0" stroke="#b58a55" stroke-opacity=".7" stroke-width="5"/>
+<rect y="343" width="800" height="60" fill="url(#ao)"/>
+<!-- grain over everything -->
+<rect width="1024" height="1024" filter="url(#grain)"/>
+</svg>
