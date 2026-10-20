@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carton</title>
+<meta name="description" content="Carton tracks your packages and tells you how many days until each one shows up. No account, no ads.">
+<meta property="og:title" content="Carton">
+<meta property="og:description" content="Days until it shows up. Package tracking with no account.">
+<meta property="og:image" content="https://carton.jaybulb.com/og.jpg">
+<meta name="theme-color" content="#fdfbf7">
+<link rel="icon" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: var(--size-body)/24px var(--font); -webkit-font-smoothing: antialiased; }
+  main { max-width: var(--measure); margin: 0 auto; padding: 0 var(--page); }
+  .hero { text-align: center; padding: var(--s8) 0 var(--s6); }
+  .hero img { width: 112px; height: 112px; border-radius: var(--r-icon); box-shadow: var(--shadow); }
+  h1 { font-size: var(--size-hero); line-height: 1; letter-spacing: -0.03em; font-weight: 700; margin: var(--s5) 0 var(--s3); }
+  .tag { font-size: var(--size-title); line-height: 28px; color: var(--ink2); margin: 0; }
+
+  /* the app, running on the page */
+  .app { margin: var(--s6) 0 var(--s7); }
+  form { display: flex; gap: var(--s2); }
+  input { flex: 1; min-width: 0; height: var(--control); padding: 0 var(--s5); border-radius: var(--r-pill); border: 1px solid var(--border);
+          background: var(--card); color: var(--ink); font: 500 var(--size-body) var(--font); outline: none; }
+  input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); }
+  button { height: var(--control); padding: 0 var(--s5); border: 0; border-radius: var(--r-pill); background: var(--accent); color: #fff;
+           font: 600 var(--size-body) var(--font); cursor: pointer; }
+  button:disabled { opacity: .5; }
+  .hint { font-size: var(--size-footnote); line-height: 18px; color: var(--ink2); margin: var(--s2) var(--s5) 0; }
+  .hint a { color: var(--accent); cursor: pointer; text-decoration: none; font-weight: 600; }
+  ul { list-style: none; padding: 0; margin: var(--s5) 0 0; background: var(--card); border-radius: var(--r-group); box-shadow: var(--shadow); overflow: hidden; }
+  ul:empty { display: none; }
+  li { display: flex; align-items: center; gap: var(--s4); padding: var(--s4) var(--s5); }
+  li + li { border-top: 1px solid var(--border); }
+  .meta { flex: 1; min-width: 0; }
+  .num { font-weight: 600; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
+  .sub { font-size: var(--size-subhead); line-height: 20px; color: var(--ink2); }
+  .days { text-align: center; color: var(--accent); min-width: 56px; }
+  .days b { display: block; font-size: var(--size-countdown); line-height: 36px; font-weight: 600; letter-spacing: -0.02em; }
+  .days span { font-size: var(--size-footnote); }
+  .x { background: none; color: var(--ink2); height: 32px; width: 32px; padding: 0; font-size: 20px; }
+  .spin { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .route { margin: 0 calc(-1 * var(--page)); }
+  .route img { width: 100%; display: block; border-radius: var(--r-card); }
+  h2 { font-size: var(--size-large-title); line-height: 41px; letter-spacing: -0.02em; margin: var(--s7) 0 var(--s4); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--s4); }
+  .card { background: var(--card); border-radius: var(--r-card); padding: var(--s5); box-shadow: var(--shadow); }
+  .card h3 { margin: 0 0 var(--s2); font-size: var(--size-body); }
+  .card p { margin: 0; color: var(--ink2); font-size: var(--size-subhead); line-height: 20px; }
+  footer { text-align: center; color: var(--ink2); font-size: var(--size-footnote); padding: var(--s8) 0 var(--s7); }
+  footer a { color: var(--ink2); }
+  @media (max-width: 480px) { h1 { font-size: 56px; } .route { margin: 0; } }
+  @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <img src="/icon.png" alt="Carton app icon, a kraft cardboard box">
+    <h1>Carton</h1>
+    <p class="tag">Days until it shows up.</p>
+  </header>
+
+  <section class="app" aria-label="Track a package">
+    <form id="add">
+      <input id="num" placeholder="UPS number or link" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="UPS tracking number or link">
+      <button id="go">Track</button>
+    </form>
+    <p class="hint" id="hint">Paste the number or the whole link from your shipping email. Saved on this device only.</p>
+    <ul id="list" aria-live="polite"></ul>
+  </section>
+
+  <section class="route"><img src="/cover.jpg" alt="A dotted route from Louisville, Kentucky to Vancouver, British Columbia with a box partway along it" loading="lazy"></section>
+
+  <h2>Everything a tracker should be. Nothing else.</h2>
+  <div class="grid">
+    <div class="card"><h3>A countdown first</h3><p>Every package leads with the number of days left. The details are one tap away.</p></div>
+    <div class="card"><h3>No account</h3><p>Nothing to sign up for. Carton has no user database, so there's nothing to leak.</p></div>
+    <div class="card"><h3>Straight from UPS</h3><p>Carton reads the same tracking page you would, so the date matches what UPS says.</p></div>
+    <div class="card"><h3>iPhone, with iCloud</h3><p>The app keeps your list in sync across your devices through your own iCloud.</p></div>
+  </div>
+
+  <footer>
+    <p>Carton supports UPS today. More carriers are coming.</p>
+    <p><a href="https://github.com/nulljosh/carton">Source on GitHub</a> · MIT License · 2026 Joshua Trommel</p>
+  </footer>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>

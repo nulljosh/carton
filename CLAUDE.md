@@ -16,5 +16,8 @@ UPS's API needs a UPS shipping account for keys, and ups.com blocks plain HTTP (
 ## QA
 Use the dedicated `Carton-QA` simulator, not the shared booted one; other sessions drive that. Launch flags: `-add <number or link>` adds a package, `-tab 0|1|2` opens a tab.
 
+## Web
+`wrangler.toml` deploys one Worker named `carton` to carton.jaybulb.com: `web/` is the landing page with the working web app under the hero (`web/app.js`, list in localStorage), and `/api/track/<number>` reads UPS's page with Cloudflare Browser Rendering (`worker/index.js`). ups.com aborts a cold headless visit; loading the UPS home page first with a desktop Safari user agent picks up the cookies that let the tracking page through. `worker/parse.js` is the JS twin of `UPSPage.parse`: change both together and run `node worker/parse.test.mjs`. Results cache for 15 minutes. The free plan limits how often a new browser can start (429 "Rate limit exceeded"); the cache is what keeps that rare. Deploy is `npx wrangler deploy`; a push deploys nothing. Never put a real tracking number on the public page; `#1Z...` in the URL adds one locally and the hash never reaches the server.
+
 ## Not done
-Landing at carton.jaybulb.com and the web app (a browser can't load ups.com cross-origin, so the web app needs a Worker that reads the page), macOS target, more carriers, App Store record (probe the name Carton first).
+See `roadmap.md`: Carton Sans in the app, Mac target, icon layers, App Store record (probe the name Carton first).

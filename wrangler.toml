@@ -1,0 +1,13 @@
+name = "carton"
+main = "worker/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+routes = [{ pattern = "carton.jaybulb.com", custom_domain = true }]
+
+[assets]
+directory = "web"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+[browser]
+binding = "BROWSER"

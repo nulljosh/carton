@@ -17,7 +17,7 @@
 <path d="M1560 430 C1640 380 1820 380 1900 420 C1940 440 1880 470 1800 466 C1720 462 1640 470 1580 462 Z" fill="url(#lake)" opacity=".85"/>
 <path d="M1880 500 C1900 560 1890 700 1860 760 C1840 790 1820 760 1830 700 C1840 640 1850 560 1880 500 Z" fill="url(#lake)" opacity=".85"/>
 <path d="M0 0 H120 C150 160 90 300 140 420 C180 520 110 640 150 780 C180 900 120 1040 140 1200 H0 Z" fill="url(#lake)" opacity=".7"/>
-<!-- the route: Langley, BC to Hodgkins, IL -->
+<!-- the route: Vancouver, BC to Louisville, KY -->
 <path id="route" d="M300 520 C700 600 1000 640 1300 680 C1500 706 1700 740 1880 790" stroke="#8c5a2c" stroke-width="10" stroke-linecap="round" stroke-dasharray="4 26" fill="none"/>
 <g fill="#fff"><circle cx="300" cy="520" r="54" fill="#fff" opacity=".5" filter="url(#glow)"/><circle cx="300" cy="520" r="22" stroke="#8c5a2c" stroke-width="8"/>
 <circle cx="1880" cy="790" r="54" fill="#fff" opacity=".5" filter="url(#glow)"/><circle cx="1880" cy="790" r="22" stroke="#8c5a2c" stroke-width="8"/></g>
@@ -28,8 +28,8 @@
 <rect x="512" y="664" width="250" height="240" rx="12" fill="#fbfaf5"/>
 </g>
 <g font-family="-apple-system, Helvetica, sans-serif" font-weight="600" fill="#5c3a1a">
-<text x="300" y="610" font-size="44" text-anchor="middle">Langley, BC</text>
-<text x="1880" y="880" font-size="44" text-anchor="middle">Hodgkins, IL</text>
+<text x="300" y="610" font-size="44" text-anchor="middle">Vancouver, BC</text>
+<text x="1880" y="880" font-size="44" text-anchor="middle">Louisville, KY</text>
 </g>
 <rect width="2400" height="1200" filter="url(#grain)"/>
 </svg>

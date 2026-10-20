@@ -1,0 +1,65 @@
+/* Carton design tokens. One source for the landing page and the web app; the Swift app mirrors
+   the same values in Brand.swift. Everything sits on an 8 point grid. The palette comes off the
+   icon: kraft board, packing tape, label paper and stamp ink. */
+@font-face { font-family: "Carton Sans"; font-weight: 400; font-display: swap; src: url("/fonts/CartonSans-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Carton Sans"; font-weight: 500; font-display: swap; src: url("/fonts/CartonSans-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Carton Sans"; font-weight: 600; font-display: swap; src: url("/fonts/CartonSans-Semibold.woff2") format("woff2"); }
+@font-face { font-family: "Carton Sans"; font-weight: 700; font-display: swap; src: url("/fonts/CartonSans-Bold.woff2") format("woff2"); }
+
+:root {
+  /* color */
+  --kraft: #c88f55;          /* box front, the brand colour */
+  --kraft-light: #e8bd86;    /* box top */
+  --kraft-deep: #8c5a2c;     /* box side; actions, links, countdown digits (6.4:1 on paper) */
+  --tape: #f0d39d;           /* highlights, selection */
+  --paper: #fdfbf7;          /* page ground, label stock */
+  --paper2: #f4eee4;         /* grouped list ground */
+  --card: #ffffff;
+  --ink: #2b1a0b;            /* text */
+  --ink2: #6f5a46;           /* secondary text */
+  --border: rgba(92, 58, 26, .14);
+  --accent: var(--kraft-deep);
+
+  /* type: Carton Sans (Inter, renamed) everywhere, system sans as the fallback */
+  --font: "Carton Sans", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --size-hero: 72px;         /* wordmark, Bold, -0.03em */
+  --size-countdown: 34px;    /* days left, Semibold */
+  --size-large-title: 34px;
+  --size-title: 22px;
+  --size-body: 17px;         /* 24 line */
+  --size-subhead: 15px;
+  --size-footnote: 13px;
+
+  /* space: the 8 point grid */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+  --page: 20px;
+  --measure: 680px;
+
+  /* shape */
+  --control: 48px;           /* fields and buttons, capsules */
+  --r-card: 28px;
+  --r-group: 20px;
+  --r-pill: 999px;
+  --r-icon: 22%;
+  --shadow: 0 1px 2px rgba(43, 26, 11, .06), 0 8px 24px rgba(43, 26, 11, .08);
+
+  /* liquid glass, for the floating bar */
+  --glass: rgba(255, 255, 255, .55);
+  --glass-edge: rgba(255, 255, 255, .7);
+  --glass-blur: blur(30px) saturate(180%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #17120d; --paper2: #1f1913; --card: #261f18;
+    --ink: #f6eee3; --ink2: #b9a690; --border: rgba(246, 238, 227, .12);
+    --kraft-deep: #e0a96d; --accent: #e0a96d;
+    --glass: rgba(38, 31, 24, .6); --glass-edge: rgba(255, 255, 255, .12);
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #17120d; --paper2: #1f1913; --card: #261f18;
+  --ink: #f6eee3; --ink2: #b9a690; --border: rgba(246, 238, 227, .12);
+  --kraft-deep: #e0a96d; --accent: #e0a96d;
+  --glass: rgba(38, 31, 24, .6); --glass-edge: rgba(255, 255, 255, .12);
+}

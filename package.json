@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@cloudflare/puppeteer": "^1.4.0"
+  }
+}
