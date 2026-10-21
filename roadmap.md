@@ -3,7 +3,7 @@
 One number first: days until it shows up. Everything below serves that.
 
 ## v1.1 (next build, while 1.0 is in review)
-- [ ] Empty-list Tuck and Add button in the build (ships with 1.1, 1.0 is frozen)
+- [x] Empty-list Tuck and Add button in the build (ships with 1.1, 1.0 is frozen). Verified 2026-10-21: the unsigned iOS simulator build succeeds with the empty state wired (Mascot, "Add a package" capsule, Add sheet), and `tests/run.sh` passes. Upload still waits on the 1.1 archive.
 - [ ] If review rejects for "couldn't test" (2.1): reply with how to get a live UPS number, never Joshua's own
 
 ## v1 to v10: the tracker people keep
