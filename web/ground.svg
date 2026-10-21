@@ -1,0 +1,25 @@
+<!-- The hero ground: a quiet stylized map. The route, box and labels are drawn live on top by app.js. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540">
+      <defs>
+        <linearGradient id="m-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9e6ec"/><stop offset="1" stop-color="#c3d6df"/></linearGradient>
+        <linearGradient id="m-land" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7eedf"/><stop offset="1" stop-color="#ecdcc0"/></linearGradient>
+        <radialGradient id="m-glow" cx=".75" cy=".7" r=".6"><stop offset="0" stop-color="#fffaf0" stop-opacity=".9"/><stop offset="1" stop-color="#fffaf0" stop-opacity="0"/></radialGradient>
+        <filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .1 0 0 0 .5 0"/></filter>
+        <clipPath id="m-clip"><path d="M160 0C135 60 185 95 158 150S128 250 168 300 148 420 128 540H960V0Z"/></clipPath>
+        <filter id="m-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="18"/></filter>
+        <filter id="m-soft" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#5a3412" flood-opacity=".18"/></filter>
+      </defs>
+      <rect width="960" height="540" fill="url(#m-sea)"/>
+      <g fill="none" stroke="#9fb9c6" stroke-opacity=".5" stroke-width="1.2"><path d="M60 0C40 120 90 220 50 330S70 470 40 540"/><path d="M95 0C75 120 125 220 85 330S105 470 75 540"/></g>
+      <path d="M160 0C135 60 185 95 158 150S128 250 168 300 148 420 128 540H960V0Z" fill="url(#m-land)" filter="url(#m-soft)"/>
+      <rect width="960" height="540" fill="url(#m-glow)"/>
+      <rect width="960" height="540" filter="url(#m-grain)" clip-path="url(#m-clip)" opacity=".18"/>
+      <g fill="none" stroke="#b89a6c" stroke-opacity=".18" stroke-width="1"><path d="M160 90H960M150 200H960M150 310H960M140 420H960"/><path d="M300 0V540M480 0V540M660 0V540M840 0V540"/></g>
+      <path d="M330 40C420 120 440 300 470 520L380 520C350 330 300 150 290 40Z" fill="#8a6a42" opacity=".12" filter="url(#m-blur)"/>
+      <g fill="#a9c4d1" stroke="#93b1c0" stroke-width="1"><path d="M650 150c20-14 70-18 110-8 8 6-4 14-16 14-30 2-60 8-86 6-10-1-14-8-8-12z"/><path d="M772 172c8 10 10 40 4 66-3 12-12 14-14 2-4-22 0-50 10-68z"/><path d="M798 172c10-6 26-2 32 8 6 10 2 16 12 22 8 6 2 18-8 20-12 2-18 12-30 8-4-14 0-24-4-34-2-10-6-18-2-24z"/><path d="M820 250c16-10 40-16 56-16-4 8-30 22-54 24z"/><path d="M880 222c14-6 34-6 42 0-8 8-30 8-42 0z"/></g>
+      <path d="M720 250C700 300 730 340 700 390S690 470 670 540" fill="none" stroke="#a9c4d1" stroke-width="3" stroke-linecap="round"/>
+      <path d="M96 96c14-4 26 26 24 56s-10 40-18 36-14-46-6-92z" fill="url(#m-land)" stroke="#d9c39f" stroke-width="1"/>
+      <path d="M162 150H690" fill="none" stroke="#a88a5e" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <g fill="none" stroke="#a9c4d1" stroke-width="2.4" stroke-linecap="round"><path d="M300 0C320 80 260 160 240 230S200 300 172 312"/><path d="M380 200C460 260 560 300 700 330"/><path d="M700 390C740 380 790 360 860 372"/></g>
+      <g fill="#a9c4d1"><ellipse cx="410" cy="300" rx="12" ry="6"/><ellipse cx="300" cy="60" rx="10" ry="5"/><ellipse cx="610" cy="120" rx="16" ry="7"/></g>
+</svg>

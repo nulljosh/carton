@@ -43,6 +43,59 @@ function row(n) {
   return li;
 }
 
+// The hero map: the newest package's last scan, a dotted line to its destination, drawn over ground.svg.
+// ground.svg is stylized, so places land through a straight fit on two anchors (Vancouver and Louisville).
+const toMap = (lat, lon) => [Math.min(940, Math.max(20, 180 + (lon + 123.12) * 15.52)), Math.min(520, Math.max(20, 135 + (49.28 - lat) * 20.4))];
+const PROVINCES = new Set(["BC", "AB", "SK", "MB", "ON", "QC", "NB", "NS", "PE", "NL", "YT", "NT", "NU"]);
+const titleCase = (t) => t.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+
+// "HODGKINS, IL, United States" or "LANGLEY, BC CA" -> a point on the map, via Open-Meteo's free geocoder (cached)
+async function locate(text) {
+  const parts = text.split(",").map((p) => p.trim());
+  const city = titleCase(parts[0]), region = (parts[1] || "").split(/\s+/)[0].toUpperCase();
+  const country = PROVINCES.has(region) ? "CA" : "US", key = `carton.geo.${city},${region}`;
+  try { const hit = localStorage.getItem(key); if (hit) return { label: `${city}, ${region}`, at: JSON.parse(hit) }; } catch {}
+  try {
+    const j = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=10&language=en`)).json();
+    const g = (j.results || []).find((r) => r.country_code === country);
+    if (!g) return null;
+    const at = toMap(g.latitude, g.longitude);
+    try { localStorage.setItem(key, JSON.stringify(at)); } catch {}
+    return { label: `${city}, ${region}`, at };
+  } catch { return null; }
+}
+
+function drawTrip(from, to, ride = false) {
+  const [ax, ay] = from.at, [bx, by] = to.at, lift = Math.hypot(bx - ax, by - ay) * 0.3;
+  const d = `M${ax.toFixed(1)} ${ay.toFixed(1)}Q${((ax + bx) / 2).toFixed(1)} ${(Math.min(ay, by) - lift).toFixed(1)} ${bx.toFixed(1)} ${by.toFixed(1)}`;
+  $("trip-line").setAttribute("d", d);
+  for (const [id, x, y] of [["trip-from", ax, ay], ["trip-to", bx, by], ["trip-pulse", bx, by]]) { $(id).setAttribute("cx", x); $(id).setAttribute("cy", y); }
+  // labels hang under their dots: the line arcs upward, and near the screen edge a side label would be cut off
+  for (const [id, p, x, y] of [["trip-from-l", from, ax, ay], ["trip-to-l", to, bx, by]]) {
+    const el = $(id);
+    el.textContent = p.label;
+    el.setAttribute("x", x); el.setAttribute("y", y + 30); el.setAttribute("text-anchor", "middle");
+  }
+  $("trip-from").style.display = $("trip-from-l").style.display = ax === bx && ay === by ? "none" : "";
+  const box = $("trip-box");
+  box.style.offsetPath = `path("${d}")`;
+  box.classList.toggle("ride", ride);
+  box.style.offsetDistance = ride ? "" : "0%";  // a live package sits at its last scan
+}
+
+async function showTrip(s, who = "Your package") {
+  if (!s?.shipTo) return;
+  const [to, from] = await Promise.all([locate(s.shipTo), s.lastLocation && !s.delivered ? locate(s.lastLocation) : null]);
+  if (!to) return;
+  drawTrip(from || to, to);
+  const d = daysLeft(s.etaDate);
+  const when = s.delivered ? "delivered" : d === null ? s.status : d <= 0 ? "arriving today" : `${d} ${d === 1 ? "day" : "days"} out`;
+  $("tripnote").textContent = `On the map: ${who}, ${to.label.split(",")[0]}, ${when}.`;
+}
+
+// until something is tracked, a sample box rides Louisville to Vancouver
+drawTrip({ label: "Louisville, KY", at: toMap(38.25, -85.76) }, { label: "Vancouver, BC", at: toMap(49.28, -123.12) }, true);
+
 function render() { $("list").replaceChildren(...parcels.map(row)); }
 
 async function refresh(n) {
@@ -51,6 +104,7 @@ async function refresh(n) {
     const r = await fetch(`/api/track/${n}`);
     const j = await r.json();
     state[n] = r.ok ? j : { error: j.error || "UPS didn't answer." };
+    if (r.ok && n === parcels[0]) showTrip(j);
   } catch { state[n] = { error: "Can't reach Cartons right now." }; }
   render();
 }

@@ -3,6 +3,7 @@
 (() => {
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const ground = document.querySelector('.ground');
   const sky = document.querySelector('.sky');
   if (sky) {
     let seed = 11;
@@ -44,6 +45,7 @@
           now[k] = Math.abs(d) < 0.05 ? goal[k] : now[k] + d * 0.12;
           if (now[k] !== goal[k]) moving = true;
         }
+        if (ground && now.y < 1400) ground.style.transform = `translate3d(${(now.px * 6).toFixed(2)}px,${(now.y * 0.55 + now.py * 4).toFixed(2)}px,0)`;
         if (now.y < 1400) for (const { layer, lag, tilt, boxes } of layers) {
           layer.style.transform = `translate3d(${(now.px * tilt).toFixed(2)}px,${(now.y * lag + now.py * tilt * 0.6).toFixed(2)}px,0)`;
           // the individual rotate property stacks on top of the CSS drift animation's transform
