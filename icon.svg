@@ -8,7 +8,9 @@
 <linearGradient id="ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1f08" stop-opacity=".22"/><stop offset="1" stop-color="#3a1f08" stop-opacity="0"/></linearGradient>
 <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="3" seed="9"/><feColorMatrix values="0 0 0 0 .22  0 0 0 0 .12  0 0 0 0 .04  0 0 0 .16 0"/></filter>
 <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10"/></filter>
+<clipPath id="tile"><rect width="1024" height="1024" rx="229"/></clipPath>
 </defs>
+<g clip-path="url(#tile)">
 <!-- faces -->
 <path d="M0 0 H910 L800 340 H0 Z" fill="url(#top)"/>
 <path d="M0 340 H800 V1024 H0 Z" fill="url(#front)"/>
@@ -38,4 +40,5 @@
 </g>
 <!-- grain over everything -->
 <rect width="1024" height="1024" filter="url(#grain)"/>
+</g>
 </svg>

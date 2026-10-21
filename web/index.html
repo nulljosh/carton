@@ -89,8 +89,8 @@
   .big canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .big::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(28, 15, 5, .6), rgba(28, 15, 5, 0) 65%); }
   .foot { position: relative; z-index: 1; width: 100%; max-width: 1120px; margin: 0 auto; padding: var(--s8) var(--page) var(--s6); }
-  .word { font-size: clamp(88px, 19vw, 240px); line-height: .85; letter-spacing: -.05em; font-weight: 700; margin: 0 0 var(--s5); }
-  .line { font-size: var(--size-title); line-height: 28px; margin: 0 0 var(--s5); color: rgba(251, 231, 194, .88); }
+  .word { font-size: clamp(88px, 19vw, 240px); line-height: .9; letter-spacing: -.02em; font-weight: 700; margin: 0 0 var(--s5); }
+  .line { font-size: var(--size-title); line-height: 28px; letter-spacing: -.01em; margin: 0 0 var(--s5); color: rgba(251, 231, 194, .88); }
   .big nav { display: flex; flex-wrap: wrap; gap: var(--s2); margin: 0 0 var(--s5); }
   .big nav a { display: inline-flex; align-items: center; height: var(--control); padding: 0 var(--s5); border-radius: var(--r-pill); font-weight: 600;
                color: #fbe7c2; text-decoration: none; background: rgba(251, 231, 194, .12); border: 1px solid rgba(251, 231, 194, .24);
@@ -168,7 +168,7 @@
     <p class="word">Cartons</p>
     <p class="line">Days until it shows up. UPS today, more carriers soon.</p>
     <nav aria-label="Footer"><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/brand/">Brand</a><a href="https://github.com/nulljosh/cartons">Source</a></nav>
-    <p class="fine">MIT License · 2026 Joshua Trommel</p>
+    <p class="fine">Apache License 2.0 · 2026 Joshua Trommel</p>
   </div>
 </footer>
 <script src="/app.js"></script>

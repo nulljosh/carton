@@ -1,6 +1,6 @@
 <img src="icon.svg" width="80" alt="Cartons icon">
 
-![version](https://img.shields.io/badge/version-0.1.0-8c5a2c) ![license](https://img.shields.io/badge/license-MIT-8c5a2c) ![tests](https://github.com/nulljosh/cartons/actions/workflows/test.yml/badge.svg)
+![version](https://img.shields.io/badge/version-1.0.0-8c5a2c) ![license](https://img.shields.io/badge/license-Apache_2.0-8c5a2c) ![platforms](https://img.shields.io/badge/iOS_·_macOS_·_web-8c5a2c) ![App Store](https://img.shields.io/badge/App_Store-in_review-8c5a2c) ![tests](https://github.com/nulljosh/cartons/actions/workflows/test.yml/badge.svg)
 
 Cartons tracks your packages and tells you how many days until each one shows up. Try it at [cartons.jaybulb.com](https://cartons.jaybulb.com).
 
@@ -10,6 +10,7 @@ Paste a UPS tracking number, or the whole link from a shipping email. Cartons re
 - A countdown to the delivery day for every package
 - Paste a number or a full tracking link; tracking numbers on the clipboard are picked up
 - Status, estimated delivery, last scan, service and destination
+- A notification when a package moves, and Tuck cheering once when it lands
 - Archive for delivered packages
 - iCloud sync, a profile, and nothing sent to any server of ours
 - A web app at cartons.jaybulb.com, same countdown, list kept in your browser
@@ -23,4 +24,4 @@ node worker/parse.test.mjs # the web parser, same page text
 npx wrangler deploy        # landing, web app and /api/track
 ```
 
-MIT License, 2026 Joshua Trommel.
+Apache License 2.0, 2026 Joshua Trommel.

@@ -15,4 +15,4 @@ The list is a small JSON array in UserDefaults, mirrored to NSUbiquitousKeyValue
 ## Limits
 The reader depends on UPS's wording. A test (`tests/ParseCheck.swift`) holds real captured page text, so a change on UPS's side shows up as a failing check rather than a silent wrong date. The official API client in `cli/ups.py` is the drop-in upgrade when keys are available.
 
-MIT License, 2026 Joshua Trommel.
+Apache License 2.0, 2026 Joshua Trommel.
