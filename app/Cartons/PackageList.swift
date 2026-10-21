@@ -112,6 +112,7 @@ struct Detail: View {
     @State private var renaming = false
     @State private var newName = ""
     @State private var cheer = false
+    @State private var addingEvent = false
     @AppStorage("celebrated") private var celebrated = ""  // numbers Tuck already cheered for, comma-joined
     @Environment(\.dismiss) private var dismiss
 
@@ -185,6 +186,14 @@ struct Detail: View {
                         LabeledContent("Checked") { Text(c, format: .relative(presentation: .named)) }
                     }
                 }
+                #if os(iOS)
+                if let s = status, !s.delivered, let day = s.etaDate {
+                    Button("Add to Calendar") { addingEvent = true }
+                        .sheet(isPresented: $addingEvent) {
+                            CalendarSheet(title: "\(current.name.isEmpty ? "Package" : current.name) arrives", day: day).ignoresSafeArea()
+                        }
+                }
+                #endif
                 Link("Open on ups.com", destination: URL(string: "https://www.ups.com/track?tracknum=\(parcel.number)")!)
             }
         }
