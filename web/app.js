@@ -71,12 +71,20 @@ function drawTrip(from, to, ride = false) {
   $("trip-line").setAttribute("d", d);
   for (const [id, x, y] of [["trip-from", ax, ay], ["trip-to", bx, by], ["trip-pulse", bx, by]]) { $(id).setAttribute("cx", x); $(id).setAttribute("cy", y); }
   // labels hang under their dots: the line arcs upward, and near the screen edge a side label would be cut off
-  for (const [id, p, x, y] of [["trip-from-l", from, ax, ay], ["trip-to-l", to, bx, by]]) {
+  for (const [id, p, x, y, other] of [["trip-from-l", from, ax, ay, bx], ["trip-to-l", to, bx, by, ax]]) {
     const el = $(id);
     el.textContent = p.label;
-    el.setAttribute("x", x); el.setAttribute("y", y + 30); el.setAttribute("text-anchor", "middle");
+    const inward = x <= other ? "start" : "end";  // text runs toward the middle of the screen
+    el.setAttribute("x", x + (inward === "start" ? -10 : 10)); el.setAttribute("y", y + 30); el.setAttribute("text-anchor", inward);
   }
   $("trip-from").style.display = $("trip-from-l").style.display = ax === bx && ay === by ? "none" : "";
+  // pan the map so the trip sits mid-screen; on a phone that keeps both ends in view
+  const ground = document.querySelector(".ground");
+  if (ground && innerWidth < 600) {  // phones: size the map so the whole trip fits the screen
+    const w = Math.min(1100, Math.max(600, innerWidth * 0.62 * 960 / Math.max(1, Math.abs(bx - ax))));
+    ground.style.width = `${w.toFixed(0)}px`; ground.style.marginLeft = `${(-w / 2).toFixed(0)}px`;
+  }
+  if (ground) ground.style.translate = `${((480 - (ax + bx) / 2) / 960 * ground.offsetWidth).toFixed(0)}px 0`;
   const box = $("trip-box");
   box.style.offsetPath = `path("${d}")`;
   box.classList.toggle("ride", ride);
