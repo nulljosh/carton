@@ -1,0 +1,88 @@
+{
+  "fill": {
+    "solid": "extended-srgb:0.784,0.561,0.333,1.0"
+  },
+  "fill-specializations": [
+    {
+      "appearance": "dark",
+      "value": {
+        "solid": "extended-srgb:0.31,0.2,0.1,1.0"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "layers": [
+        {
+          "glass": true,
+          "image-name": "face.png",
+          "name": "Face"
+        },
+        {
+          "glass": true,
+          "image-name": "label.png",
+          "name": "Label"
+        },
+        {
+          "glass": true,
+          "image-name": "tape.png",
+          "name": "Tape"
+        }
+      ],
+      "lighting": "individual",
+      "name": "Front",
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.35
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    },
+    {
+      "layers": [
+        {
+          "glass": false,
+          "image-name": "base-dark.png",
+          "name": "Board dark",
+          "hidden-specializations": [
+            {
+              "value": true
+            },
+            {
+              "appearance": "dark",
+              "value": false
+            }
+          ]
+        },
+        {
+          "glass": false,
+          "image-name": "base.png",
+          "name": "Board",
+          "hidden-specializations": [
+            {
+              "appearance": "dark",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "lighting": "combined",
+      "name": "Box",
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.25
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}

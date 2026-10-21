@@ -30,6 +30,9 @@ struct SettingsView: View {
                     LabeledContent("Archived", value: "\(store.archived.count)")
                     Button("Refresh all") { Task { await store.refreshAll() } }
                 }
+                #if os(iOS)
+                IconPicker()
+                #endif
                 Section("About") {
                     LabeledContent("Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")
                     LabeledContent("Carriers", value: "UPS")
@@ -39,3 +42,33 @@ struct SettingsView: View {
         }
     }
 }
+
+#if os(iOS)
+/// The kraft box is the default icon; Tuck is the alternate (iPhone and iPad only, the Mac can't switch icons).
+private struct IconPicker: View {
+    @State private var current = UIApplication.shared.alternateIconName
+
+    var body: some View {
+        Section("App icon") {
+            row("Box", icon: nil, preview: "BoxPreview")
+            row("Tuck", icon: "Tuck", preview: "TuckPreview")
+        }
+    }
+
+    private func row(_ label: String, icon: String?, preview: String) -> some View {
+        Button {
+            Task { try? await UIApplication.shared.setAlternateIconName(icon); current = UIApplication.shared.alternateIconName }
+        } label: {
+            HStack(spacing: 16) {
+                Image(preview).resizable().frame(width: 48, height: 48).clipShape(RoundedRectangle(cornerRadius: 11, style: .continuous))
+                Text(label).foregroundStyle(.primary)
+                Spacer()
+                if current == icon { Image(systemName: "checkmark").foregroundStyle(Brand.accent).fontWeight(.semibold) }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(current == icon ? .isSelected : [])
+    }
+}
+#endif

@@ -17,8 +17,8 @@ One number first: days until it shows up. Everything below serves that.
 - [x] Fix: a delivered page with no date showed "Latest Update" (app) or the number (web) as the date; both parsers now need a real date, with a test
 - [x] Delivered state: "It's here", Tuck waves and a haptic fires the first time only, then "Archive it"
 - [x] Haptics on add and on the first "It's here" (iOS)
-- [ ] Tuck as an alternate app icon, picked in Settings (iOS and iPad; the kraft box stays the default)
-- [ ] Landing parallax A+ pass: depth blur, lighting, smoother scroll, mobile
+- [x] Tuck as an alternate app icon (`Tuck.icon`, Icon Composer, full bleed), picked in Settings on iPhone and iPad; the kraft box stays the default
+- [x] Landing parallax pass: eased scroll, pointer lean, depth blur and shadows, labeled boxes, lighter on phones
 - [x] Price $0.99 upfront (MONEY.md), Apache 2.0, README badges and rounded icon, footer tracking, 7 done issues closed
 - [ ] If review rejects for "couldn't test" (2.1): reply with how to get a live UPS number, never Joshua's own
 
