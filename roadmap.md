@@ -4,9 +4,10 @@ One number first: days until it shows up. Everything below serves that.
 
 ## To v1.0 (the loop works this list)
 - [x] v0.8 Splash, first-run onboarding (three animated glyph pages) and Tuck the mascot (`Mascot.swift`)
-- [ ] Tuck on the landing page and brand kit, and in the empty Packages list
-- [ ] v0.9 Signed archive for iOS and Mac, upload to App Store Connect, fill the listing from docs/APPSTORE.md
-- [ ] v1.0 Submitted for review on iOS and Mac
+- [x] Tuck on the landing page; parallax hero and shader footer
+- [ ] Tuck in the empty Packages list and on the brand kit page
+- [x] v0.9 iOS build 2 and Mac build 1 (1.0.0) uploaded and attached, listing, screenshots (iPhone, iPad, Mac), privacy label, pricing free, all territories; `asc validate` clean
+- [ ] v1.0 Submitted for review on iOS and Mac (waiting on Joshua's yes)
 
 ## v1 to v10: the tracker people keep
 - v2 Notifications when the status changes (background refresh)
