@@ -100,7 +100,7 @@ struct Onboarding: View {
         VStack(spacing: 0) {
             HStack {
                 Spacer()
-                if !last { Button("Skip", action: done).font(.carton(.body, "Medium")) }
+                if !last { Button("Skip", action: done).font(.carton(.body, "Medium")).keyboardShortcut(.cancelAction) }
             }
             .frame(height: 44)
             Spacer()
@@ -127,6 +127,7 @@ struct Onboarding: View {
                     .frame(maxWidth: .infinity, minHeight: 48).background(Capsule().fill(Brand.accent)).contentShape(Capsule())
             }
             .buttonStyle(.plain)
+            .keyboardShortcut(.defaultAction)
         }
         .padding(.horizontal, 24)
         .padding(.bottom, 24)

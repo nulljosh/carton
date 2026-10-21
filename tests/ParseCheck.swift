@@ -4,7 +4,7 @@ import Foundation
 @main
 struct ParseCheck {
     static func main() {
-        let n = "1ZG2C4706800239082"
+        let n = "1Z999AA10123456784"
         // real desktop page text, captured 2026-10-20
         let onTheWay = """
         Tracking Details
@@ -24,7 +24,7 @@ struct ParseCheck {
         Out for Delivery
         inactive
         Ship To
-        LANGLEY, BC CA
+        VANCOUVER, BC CA
         Service
         UPS® Standard
         """
@@ -32,7 +32,7 @@ struct ParseCheck {
         assert(s.status == "On the Way", s.status)
         assert(s.eta == "Tuesday, October 27 , 9:30 A.M. - 12:30 P.M.")
         assert(Calendar.current.component(.day, from: s.etaDate!) == 27)
-        assert(s.lastLocation?.hasPrefix("Hodgkins") == true && s.shipTo == "LANGLEY, BC CA" && s.service == "UPS® Standard")
+        assert(s.lastLocation?.hasPrefix("Hodgkins") == true && s.shipTo == "VANCOUVER, BC CA" && s.service == "UPS® Standard")
         assert(!s.delivered)
         assert(s.steps.map(\.name) == ["Label Created", "We Have Your Package", "On the Way", "Out for Delivery"])
         assert(s.steps.map(\.state) == ["completed", "completed", "active", "inactive"])
@@ -46,7 +46,7 @@ struct ParseCheck {
         assert(UPSPage.parse(flipped, number: n)!.steps.map(\.name) == ["Label Created", "On the Way", "Delivery"])
 
         // delivered, date on the same line as its label
-        let done = "Delivered\n\(n)\nDelivered On: Tuesday, 10/27/2026 at 11:02 A.M.\nShip To\nLANGLEY, BC CA"
+        let done = "Delivered\n\(n)\nDelivered On: Tuesday, 10/27/2026 at 11:02 A.M.\nShip To\nVANCOUVER, BC CA"
         let d = UPSPage.parse(done, number: n)!
         assert(d.delivered && d.status == "Delivered")
         assert(Calendar.current.component(.month, from: d.etaDate!) == 10)
@@ -57,6 +57,9 @@ struct ParseCheck {
         assert(ic.status == "Delivered" && ic.eta == "Monday, 10/12/2026 at 2:14 P.M.", "\(ic.status) / \(ic.eta ?? "nil")")
 
         // still loading: nothing yet
+        // a delivered page with no date: never show the next line as the date
+        let bare = UPSPage.parse("Delivered\nLatest Update\n\(n)\nService\nUPS Express 12:00", number: n)!
+        assert(bare.delivered && bare.eta == nil, bare.eta ?? "nil")
         assert(UPSPage.parse("Tracking Details\nLoading", number: n) == nil)
         assert(UPSPage.isNotFound("We could not locate the shipment details for this tracking number."))
 

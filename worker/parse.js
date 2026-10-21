@@ -33,7 +33,18 @@ export function parse(text, number) {
     }
     return null;
   };
-  const eta = delivered ? value(["delivered on", "delivery date", "delivered"]) : value(["estimated delivery", "scheduled delivery", "delivery date"]);
+  // a delivery value counts only if it reads as a date: a bare "Delivered" headline is followed by "Latest Update" or the number
+  const dated = (labels) => {
+    for (const label of labels) {
+      for (let j = 0; j < lower.length; j++) {
+        if (!lower[j].startsWith(label)) continue;
+        const v = lines[j].slice(label.length).replace(/^[:\s]+/, "").trim() || lines[j + 1];
+        if (v && day(v)) return v;
+      }
+    }
+    return null;
+  };
+  const eta = delivered ? dated(["delivered on", "delivery date", "delivered"]) : dated(["estimated delivery", "scheduled delivery", "delivery date"]);
   const steps = lines.slice(0, -1).map((name, i) => ({ name, state: lower[i + 1] }))
     .filter((st) => ["completed", "active", "inactive"].includes(st.state));
   // the phone layout lists them last step first; always read first step first

@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import { parse, day, isNotFound } from "./parse.js";
-const n = "1ZG2C4706800239082";
-const onTheWay = `Tracking Details\nOn the Way\n${n}\nEstimated delivery\n help\nTuesday, October 27 , 9:30 A.M. - 12:30 P.M.\nLast Location:\nHodgkins, IL, United States, 10/20/2026, 9:56 A.M.\nLabel Created\ncompleted\nWe Have Your Package\ncompleted\nOn the Way\nactive\nOut for Delivery\ninactive\nShip To\nLANGLEY, BC CA\nService\nUPS® Standard`;
+const n = "1Z999AA10123456784";
+const onTheWay = `Tracking Details\nOn the Way\n${n}\nEstimated delivery\n help\nTuesday, October 27 , 9:30 A.M. - 12:30 P.M.\nLast Location:\nHodgkins, IL, United States, 10/20/2026, 9:56 A.M.\nLabel Created\ncompleted\nWe Have Your Package\ncompleted\nOn the Way\nactive\nOut for Delivery\ninactive\nShip To\nVANCOUVER, BC CA\nService\nUPS® Standard`;
 const now = new Date(2026, 9, 20);
 const s = parse(onTheWay, n);
 assert.equal(s.status, "On the Way");
 assert.equal(s.eta, "Tuesday, October 27 , 9:30 A.M. - 12:30 P.M.");
 assert.equal(day(s.eta, now), "2026-10-27");
-assert.equal(s.shipTo, "LANGLEY, BC CA");
+assert.equal(s.shipTo, "VANCOUVER, BC CA");
 assert.equal(s.service, "UPS® Standard");
 assert.ok(s.lastLocation.startsWith("Hodgkins"));
 assert.deepEqual(s.steps.map((x) => x.state), ["completed", "completed", "active", "inactive"]);
@@ -18,6 +18,9 @@ assert.ok(d.delivered && d.etaDate === "2026-10-27");
 const ic = parse(`Delivered check_circle\n${n}\nDelivered On\ncheck_circle\nMonday, 10/12/2026 at 2:14 P.M.\nchevron_right\nhelp`, n);
 assert.equal(ic.status, "Delivered");
 assert.equal(ic.eta, "Monday, 10/12/2026 at 2:14 P.M.");
+// a delivered page with no date: never show the next line as the date
+const bare = parse(`Delivered\nLatest Update\n${n}\nService\nUPS Express 12:00`, n);
+assert.ok(bare.delivered && bare.eta === null);
 assert.equal(parse("Tracking Details\nLoading", n), null);
 assert.ok(isNotFound("We could not locate the shipment details for this tracking number."));
 assert.equal(day("Friday, January 2", new Date(2026, 11, 30)), "2027-01-02");

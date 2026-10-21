@@ -71,7 +71,17 @@ final class UPSPage: NSObject {
             }
             return nil
         }
-        let eta = delivered ? value(["delivered on", "delivery date", "delivered"]) : value(["estimated delivery", "scheduled delivery", "delivery date"])
+        // a delivery value counts only if it reads as a date: a bare "Delivered" headline is followed by "Latest Update" or the number
+        func dated(_ labels: [String]) -> String? {
+            for label in labels {
+                for j in lower.indices where lower[j].hasPrefix(label) {
+                    let rest = lines[j].dropFirst(label.count).trimmingCharacters(in: CharacterSet(charactersIn: ": "))
+                    if let v = rest.isEmpty ? lines[(j + 1)...].first : rest, day(v) != nil { return v }
+                }
+            }
+            return nil
+        }
+        let eta = delivered ? dated(["delivered on", "delivery date", "delivered"]) : dated(["estimated delivery", "scheduled delivery", "delivery date"])
         // the progress bar: each step name is followed by its state
         var steps = zip(lines, lower.dropFirst()).filter { ["completed", "active", "inactive"].contains($0.1) }.map { Step(name: $0.0, state: $0.1) }
         // the phone layout lists them last step first; always read first step first

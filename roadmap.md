@@ -11,11 +11,12 @@ One number first: days until it shows up. Everything below serves that.
 
 ## v1.1 (next build, while 1.0 is in review)
 - [ ] Empty-list Tuck and Add button in the build (ships with 1.1, 1.0 is frozen)
-- [ ] Mac pass on splash and onboarding: window size, keyboard Return for Next, Esc for Skip
-- [ ] Pull to refresh on the list, and a "last checked" line on each package
-- [ ] Friendly error when UPS's page changes or times out: Tuck shrugs, "Open on UPS" button
+- [x] Mac keys on onboarding: Return for Next, Esc for Skip
+- [x] "Checked" time on each package (pull to refresh was already there)
+- [x] Friendly error when UPS doesn't answer: Tuck, the reason, "Open on ups.com" below
+- [x] Fix: a delivered page with no date showed "Latest Update" (app) or the number (web) as the date; both parsers now need a real date, with a test
 - [ ] Delivered state: Tuck celebrates once, then offers Archive
-- [ ] Haptic on add and on delivered (iOS)
+- [x] Haptic on add (iOS); delivered haptic waits for the celebrate-once state
 - [ ] If review rejects for "couldn't test" (2.1): reply with how to get a live UPS number, never Joshua's own
 
 ## v1 to v10: the tracker people keep

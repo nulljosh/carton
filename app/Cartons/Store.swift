@@ -38,6 +38,7 @@ final class Store {
     var parcels: [Parcel] = []
     var statuses: [String: Status] = [:]
     var errors: [String: String] = [:]
+    var checked: [String: Date] = [:]  // last successful read per number
 
     private let key = "parcels"
     // ponytail: UserDefaults, move to NSUbiquitousKeyValueStore when a second device matters
@@ -141,6 +142,7 @@ final class Store {
         do {
             statuses[n] = try await UPSPage().fetch(n)
             errors[n] = nil
+            checked[n] = .now
         } catch {
             errors[n] = "UPS didn't answer. Pull to retry."
         }

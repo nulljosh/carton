@@ -58,6 +58,7 @@ struct PackageList: View {
             .toolbar { if !archive { Button("Add", systemImage: "plus") { adding = true } } }
             .sheet(isPresented: $adding) { AddSheet() }
             .refreshable { await store.refreshAll() }
+            .sensoryFeedback(.success, trigger: store.parcels.count) { old, new in !archive && new > old }
             .task {
                 // QA hook: -open shows the first package
                 if !archive, ProcessInfo.processInfo.arguments.contains("-open"), let first = parcels.first { path = [first] }
@@ -116,6 +117,16 @@ struct Detail: View {
 
     var body: some View {
         List {
+            if status == nil, let e = store.errors[parcel.number] {
+                Section {
+                    VStack(spacing: 12) {
+                        Mascot(size: 120, lively: false)
+                        Text("Tuck couldn't reach UPS").font(.carton(.headline, "Semibold"))
+                        Text(e).font(.carton(.subheadline)).foregroundStyle(.secondary).multilineTextAlignment(.center)
+                    }
+                    .frame(maxWidth: .infinity).padding(.vertical, 16)
+                }
+            }
             if let s = status, let d = s.daysLeft, !s.delivered {
                 Section {
                     VStack(spacing: 4) {
@@ -147,8 +158,9 @@ struct Detail: View {
                     if let l = s.lastLocation { LabeledContent("Last scan", value: l) }
                     if let v = s.service { LabeledContent("Service", value: v) }
                     if let t = s.shipTo { LabeledContent("Ship to", value: t) }
-                } else if let e = store.errors[parcel.number] {
-                    Text(e).foregroundStyle(.secondary)
+                    if let c = store.checked[parcel.number] {
+                        LabeledContent("Checked") { Text(c, format: .relative(presentation: .named)) }
+                    }
                 }
                 Link("Open on ups.com", destination: URL(string: "https://www.ups.com/track?tracknum=\(parcel.number)")!)
             }
