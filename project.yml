@@ -43,3 +43,5 @@ targets:
         "CODE_SIGN_ENTITLEMENTS[sdk=macosx*]": app/Cartons-macOS.entitlements
         MARKETING_VERSION: 1.0.0
         SWIFT_VERSION: "5.9"
+        SWIFT_EMIT_LOC_STRINGS: YES
+        LOCALIZATION_PREFERS_STRING_CATALOGS: YES

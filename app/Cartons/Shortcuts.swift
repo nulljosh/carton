@@ -15,8 +15,8 @@ struct NextDeliveryIntent: AppIntent {
         guard let (parcel, date) = next else { return .result(dialog: "Nothing's on the way right now.") }
         let cal = Calendar.current
         let days = cal.dateComponents([.day], from: cal.startOfDay(for: .now), to: cal.startOfDay(for: date)).day ?? 0
-        let name = parcel.name.isEmpty ? "Your package" : parcel.name
-        let when = days <= 0 ? "arrives today" : days == 1 ? "arrives tomorrow" : "arrives in \(days) days"
+        let name = parcel.name.isEmpty ? String(localized: "Your package") : parcel.name
+        let when = days <= 0 ? String(localized: "arrives today") : days == 1 ? String(localized: "arrives tomorrow") : String(localized: "arrives in \(days) days")
         return .result(dialog: "\(name) \(when).")
     }
 }

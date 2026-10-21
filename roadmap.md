@@ -21,7 +21,7 @@ One number first: days until it shows up. Everything below serves that.
 - v18 iPad layout with a sidebar
 - v22 Delivery photos and signatures where the carrier shows them
 - v25 Thirty carriers through one reader per carrier, each with captured page text in the test
-- v28 Translations, every interface string in 19 languages
+- v28 Translations: the app is in 8 languages (es, zh-Hans, ja, de, pt-BR, fr, ko, it) through `Localizable.xcstrings`; next the App Store listing in the same 8, Siri phrases, then 11 more languages
 - v30 Accessibility: a real-device VoiceOver walkthrough is left (rows read as one sentence, Tuck hidden where text says it, reduced motion stops Tuck and the glyphs, largest Dynamic Type wraps)
 
 ## v30 to v60: households and history

@@ -155,7 +155,7 @@ final class Store {
             etas[n] = s.delivered ? nil : s.etaDate
             UserDefaults.standard.set(etas, forKey: "lastETA")
         } catch {
-            errors[n] = "UPS didn't answer. Pull to retry."
+            errors[n] = String(localized: "UPS didn't answer. Pull to retry.")
         }
     }
 
@@ -168,8 +168,8 @@ final class Store {
         guard let old, old != s.status else { return }
         let c = UNMutableNotificationContent()
         let name = parcels.first { $0.number == n }?.name ?? ""
-        c.title = name.isEmpty ? "Your package" : name
-        c.body = s.delivered ? "Delivered. It's here." : s.status
+        c.title = name.isEmpty ? String(localized: "Your package") : name
+        c.body = s.delivered ? String(localized: "Delivered. It's here.") : s.status
         c.sound = .default
         UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "\(n)-\(s.status)", content: c, trigger: nil))
     }

@@ -91,7 +91,7 @@ struct Onboarding: View {
     @State private var page = ProcessInfo.processInfo.arguments.firstIndex(of: "-page").map { Int(ProcessInfo.processInfo.arguments[$0 + 1]) ?? 0 } ?? 0  // QA hook: -page 3
     @State private var forward = true
 
-    private let pages = [
+    private let pages: [(String, LocalizedStringKey, LocalizedStringKey)] = [
         ("doc.on.clipboard", "Copy a tracking number", "Cartons sees a UPS number on your clipboard and fills it in for you."),
         ("box.truck.fill", "Watch it move", "Every scan from label to doorstep, in one tidy list."),
         ("calendar.badge.clock", "Know the day", "A big countdown to delivery day. No account, no ads, nothing to sign up for."),
@@ -150,7 +150,7 @@ struct Onboarding: View {
         page += step
     }
 
-    private func card(title: String, body: String, @ViewBuilder art: () -> some View) -> some View {
+    private func card(title: LocalizedStringKey, body: LocalizedStringKey, @ViewBuilder art: () -> some View) -> some View {
         VStack(spacing: 32) {
             art().frame(height: 220)
             VStack(spacing: 12) {

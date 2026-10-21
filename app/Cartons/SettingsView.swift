@@ -55,7 +55,7 @@ private struct IconPicker: View {
         }
     }
 
-    private func row(_ label: String, icon: String?, preview: String) -> some View {
+    private func row(_ label: LocalizedStringKey, icon: String?, preview: String) -> some View {
         Button {
             Task { try? await UIApplication.shared.setAlternateIconName(icon); current = UIApplication.shared.alternateIconName }
         } label: {

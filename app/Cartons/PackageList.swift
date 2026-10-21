@@ -92,16 +92,16 @@ struct Row: View {
 
     /// One VoiceOver sentence per row: "Running shoes, On the Way, 2 days".
     private var spoken: String {
-        let name = parcel.name.isEmpty ? "Package" : parcel.name
+        let name = parcel.name.isEmpty ? String(localized: "Package") : parcel.name
         guard let s = status else { return "\(name), \(subtitle)" }
-        if s.delivered { return "\(name), delivered" }
+        if s.delivered { return String(localized: "\(name), delivered") }
         guard let d = s.daysLeft else { return "\(name), \(s.status)" }
-        return "\(name), \(s.status), " + (d <= 0 ? "arriving today" : d == 1 ? "1 day" : "\(d) days")
+        return "\(name), \(s.status), " + (d <= 0 ? String(localized: "arriving today") : String(localized: "\(d) days"))
     }
 
     private var subtitle: String {
         if let s = status { return s.status }
-        return store.errors[parcel.number] ?? "Checking"
+        return store.errors[parcel.number] ?? String(localized: "Checking")
     }
 
     @ViewBuilder private var countdown: some View {
@@ -203,7 +203,7 @@ struct Detail: View {
                 if let s = status, !s.delivered, let day = s.etaDate {
                     Button("Add to Calendar") { addingEvent = true }
                         .sheet(isPresented: $addingEvent) {
-                            CalendarSheet(title: "\(current.name.isEmpty ? "Package" : current.name) arrives", day: day).ignoresSafeArea()
+                            CalendarSheet(title: String(localized: "\(current.name.isEmpty ? String(localized: "Package") : current.name) arrives"), day: day).ignoresSafeArea()
                         }
                 }
                 #endif
