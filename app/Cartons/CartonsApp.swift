@@ -8,7 +8,12 @@ struct CartonsApp: App {
         Brand.registerFonts()
         let args = ProcessInfo.processInfo.arguments
         if args.contains("-onboarding") { UserDefaults.standard.set(false, forKey: "onboarded") }  // QA hooks
-        else if args.contains("-demo") { UserDefaults.standard.set(true, forKey: "onboarded") }
+        #if DEBUG
+        if args.contains("-demo"), !args.contains("-onboarding") {
+            UserDefaults.standard.set(true, forKey: "onboarded")
+            UserDefaults.standard.set("Sam", forKey: "profileName")
+        }
+        #endif
     }
 
     var body: some Scene {

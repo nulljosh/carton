@@ -29,7 +29,7 @@ What's in it:
 Cartons supports UPS today. More carriers are coming.
 
 ## Keywords (100 max)
-ups,tracking,package,parcel,delivery,shipment,tracker,deliveries,countdown,shipping,mail,order
+ups,parcel,delivery,shipment,tracker,deliveries,countdown,shipping,mail,order,arrival,courier,eta
 
 ## What's New
 First release. Track UPS packages with a countdown to the delivery day.

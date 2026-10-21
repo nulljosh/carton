@@ -4,3 +4,4 @@ build.log
 .wrangler/
 node_modules/
 build-mac.log
+.asc/

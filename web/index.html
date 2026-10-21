@@ -50,7 +50,23 @@
   .route { margin: 0 calc(-1 * var(--page)); }
   .route img { width: 100%; display: block; border-radius: var(--r-card); }
   h2 { font-size: var(--size-large-title); line-height: 41px; letter-spacing: -0.02em; margin: var(--s7) 0 var(--s4); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--s4); }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s4); }
+  @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+  .tuck { display: flex; align-items: center; gap: var(--s5); margin-top: var(--s7); }
+  .tuck svg { width: 140px; height: 140px; flex: none; }
+  .tuck h2 { margin: 0 0 var(--s2); }
+  .tuck p { margin: 0; color: var(--ink2); }
+  @media (max-width: 480px) { .tuck { flex-direction: column; text-align: center; } }
+  .t-bob { animation: t-bob 1.3s ease-in-out infinite; }
+  .t-l, .t-r, .t-eye { transform-box: view-box; }
+  .t-l { transform-origin: 40px 82px; animation: t-l 1.96s ease-in-out infinite; }
+  .t-r { transform-origin: 160px 82px; animation: t-r 1.96s ease-in-out infinite; }
+  .t-eye { transform-origin: 100px 128px; animation: t-blink 3.6s infinite; }
+  @keyframes t-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  @keyframes t-l { 0%, 100% { transform: rotate(-96deg); } 50% { transform: rotate(-114deg); } }
+  @keyframes t-r { 0%, 100% { transform: rotate(96deg); } 50% { transform: rotate(114deg); } }
+  @keyframes t-blink { 0%, 95%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
+  @media (prefers-reduced-motion: reduce) { .t-bob, .t-l, .t-r, .t-eye { animation: none; } .t-l { transform: rotate(-105deg); } .t-r { transform: rotate(105deg); } }
   .card { background: var(--card); border-radius: var(--r-card); padding: var(--s5); box-shadow: var(--shadow); }
   .card h3 { margin: 0 0 var(--s2); font-size: var(--size-body); }
   .card p { margin: 0; color: var(--ink2); font-size: var(--size-subhead); line-height: 20px; }
@@ -79,17 +95,42 @@
 
   <section class="route"><img src="/cover.jpg" alt="A dotted route from Louisville, Kentucky to Vancouver, British Columbia with a box partway along it" loading="lazy"></section>
 
-  <h2>Everything a tracker should be. Nothing else.</h2>
+  <h2>A tracker, and nothing else.</h2>
   <div class="grid">
     <div class="card"><h3>A countdown first</h3><p>Every package leads with the number of days left. The details are one tap away.</p></div>
     <div class="card"><h3>No account</h3><p>Nothing to sign up for. Cartons has no user database, so there's nothing to leak.</p></div>
     <div class="card"><h3>Straight from UPS</h3><p>Cartons reads the same tracking page you would, so the date matches what UPS says.</p></div>
-    <div class="card"><h3>iPhone, with iCloud</h3><p>The app keeps your list in sync across your devices through your own iCloud.</p></div>
+    <div class="card"><h3>iPhone and Mac</h3><p>The app keeps your list in sync across your devices through your own iCloud.</p></div>
   </div>
+
+  <section class="tuck">
+    <!-- Tuck, the mascot. Same drawing as app/Cartons/Mascot.swift. -->
+    <svg viewBox="0 0 200 200" role="img" aria-label="Tuck, a cardboard box with a face, waving its flaps">
+      <defs>
+        <linearGradient id="t-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c88f55"/><stop offset="1" stop-color="#a66d3a"/></linearGradient>
+        <linearGradient id="t-flap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8bd86"/><stop offset="1" stop-color="#d9a76c"/></linearGradient>
+      </defs>
+      <ellipse cx="100" cy="193" rx="59" ry="6" fill="#000" opacity=".12"/>
+      <g class="t-bob">
+        <rect class="t-l" x="40" y="71" width="68" height="22" rx="5" fill="url(#t-flap)"/>
+        <rect class="t-r" x="92" y="71" width="68" height="22" rx="5" fill="url(#t-flap)"/>
+        <rect x="30" y="70" width="140" height="120" rx="14" fill="url(#t-body)"/>
+        <rect x="38" y="71" width="124" height="4" rx="2" fill="#f2cf9c" opacity=".85"/>
+        <rect x="88" y="70" width="24" height="30" fill="#f0d39d" opacity=".92"/>
+        <g class="t-eye" fill="#2b1a0c"><ellipse cx="80" cy="128" rx="6.5" ry="8.5"/><ellipse cx="120" cy="128" rx="6.5" ry="8.5"/>
+          <circle cx="83" cy="124" r="2.25" fill="#fff"/><circle cx="123" cy="124" r="2.25" fill="#fff"/></g>
+        <ellipse cx="64" cy="146" rx="8" ry="4.5" fill="#8c4a22" opacity=".28"/><ellipse cx="136" cy="146" rx="8" ry="4.5" fill="#8c4a22" opacity=".28"/>
+        <path d="M108.16 143.8 A9 9 0 0 1 91.84 143.8" fill="none" stroke="#2b1a0c" stroke-width="3.5" stroke-linecap="round"/>
+        <g transform="rotate(-6 145 170)"><rect x="128" y="157" width="34" height="26" rx="4" fill="#fbfaf5"/>
+          <g fill="#2b2b2b"><rect x="130.5" y="167" width="3" height="12"/><rect x="135.5" y="167" width="1.5" height="12"/><rect x="139" y="167" width="4" height="12"/><rect x="145" y="167" width="1.5" height="12"/><rect x="148.5" y="167" width="2.5" height="12"/><rect x="153" y="167" width="1.5" height="12"/><rect x="156.5" y="167" width="3" height="12"/></g></g>
+      </g>
+    </svg>
+    <div><h2>Meet Tuck</h2><p>Tuck keeps an eye on your boxes so you don't have to. You'll find it waving in the app.</p></div>
+  </section>
 
   <footer>
     <p>Cartons supports UPS today. More carriers are coming.</p>
-    <p><a href="https://github.com/nulljosh/cartons">Source on GitHub</a> · MIT License · 2026 Joshua Trommel</p>
+    <p><a href="/support">Support</a> · <a href="/privacy">Privacy</a> · <a href="https://github.com/nulljosh/cartons">Source on GitHub</a> · MIT License · 2026 Joshua Trommel</p>
   </footer>
 </main>
 <script src="/app.js"></script>
