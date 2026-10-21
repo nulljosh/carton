@@ -16,8 +16,20 @@ struct PackageList: View {
                         ContentUnavailableView("Nothing archived", systemImage: "archivebox",
                             description: Text("Swipe a delivered package to archive it."))
                     } else {
-                        ContentUnavailableView("No packages", systemImage: "shippingbox",
-                            description: Text("Paste a UPS tracking number or link."))
+                        ContentUnavailableView {
+                            VStack(spacing: 12) {
+                                Mascot(size: 140)
+                                Text("No packages").font(.carton(.title2, "Bold"))
+                            }
+                        } description: {
+                            Text("Paste a UPS tracking number or link. Tuck will watch it for you.")
+                        } actions: {
+                            Button { adding = true } label: {
+                                Text("Add a package").font(.carton(.headline, "Semibold")).foregroundStyle(.white)
+                                    .padding(.horizontal, 24).frame(minHeight: 48).background(Capsule().fill(Brand.accent)).contentShape(Capsule())
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                 } else {
                     List {

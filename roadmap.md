@@ -5,9 +5,18 @@ One number first: days until it shows up. Everything below serves that.
 ## To v1.0 (the loop works this list)
 - [x] v0.8 Splash, first-run onboarding (three animated glyph pages) and Tuck the mascot (`Mascot.swift`)
 - [x] Tuck on the landing page; parallax hero and shader footer
-- [ ] Tuck in the empty Packages list and on the brand kit page
+- [x] Tuck in the empty Packages list (with an Add button) and on the brand kit page
 - [x] v0.9 iOS build 2 and Mac build 1 (1.0.0) uploaded and attached, listing, screenshots (iPhone, iPad, Mac), privacy label, pricing free, all territories; `asc validate` clean
-- [ ] v1.0 Submitted for review on iOS and Mac (waiting on Joshua's yes)
+- [x] v1.0 Submitted for review on iOS and Mac, 2026-10-20 (both WAITING_FOR_REVIEW)
+
+## v1.1 (next build, while 1.0 is in review)
+- [ ] Empty-list Tuck and Add button in the build (ships with 1.1, 1.0 is frozen)
+- [ ] Mac pass on splash and onboarding: window size, keyboard Return for Next, Esc for Skip
+- [ ] Pull to refresh on the list, and a "last checked" line on each package
+- [ ] Friendly error when UPS's page changes or times out: Tuck shrugs, "Open on UPS" button
+- [ ] Delivered state: Tuck celebrates once, then offers Archive
+- [ ] Haptic on add and on delivered (iOS)
+- [ ] If review rejects for "couldn't test" (2.1): reply with how to get a live UPS number, never Joshua's own
 
 ## v1 to v10: the tracker people keep
 - v2 Notifications when the status changes (background refresh)
