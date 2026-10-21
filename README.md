@@ -1,4 +1,4 @@
-<img src="icon.svg" width="80" alt="Cartons icon">
+<img src="icon.svg?v=2" width="80" alt="Cartons icon">
 
 ![version](https://img.shields.io/badge/version-1.0.0-8c5a2c) ![license](https://img.shields.io/badge/license-Apache_2.0-8c5a2c) ![platforms](https://img.shields.io/badge/iOS_·_macOS_·_web-8c5a2c) ![App Store](https://img.shields.io/badge/App_Store-in_review-8c5a2c) ![tests](https://github.com/nulljosh/cartons/actions/workflows/test.yml/badge.svg)
 
