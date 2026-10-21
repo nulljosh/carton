@@ -1,0 +1,8 @@
+{
+  "subtitle": "Rastreio sem criar conta",
+  "promotionalText": "Cole um código ou link de rastreio da UPS e o Cartons conta os dias. Sem cadastro, sem servidores, sem anúncios. Sua lista sincroniza pelo iCloud e só por ele.",
+  "description": "O Cartons rastreia suas encomendas e conta primeiro o que importa: quantos dias faltam para chegar.\n\nCole um código de rastreio da UPS, ou o link completo de um e-mail, e o Cartons faz o resto. Ele lê o status direto da UPS, calcula a data de entrega e coloca uma contagem regressiva ao lado de cada pacote. Toque em um para ver o último escaneamento, o serviço e o destino.\n\nNão precisa criar conta. O Cartons não tem servidores, então não há onde fazer login nem nada que possa vazar. Sua lista fica no seu iPhone e sincroniza com seus outros dispositivos pelo iCloud.\n\nQuando um pacote chega, deslize para o arquivo e mantenha a lista curta.\n\nO que tem no app:\n- Contagem regressiva até o dia da entrega de cada pacote\n- Cole um código ou um link de rastreio completo; o Cartons reconhece códigos de rastreio na sua área de transferência\n- Status, entrega estimada, último escaneamento, serviço e destino\n- Arquivo para pacotes entregues\n- Sincronização com iCloud entre seus dispositivos\n- Sem conta, sem anúncios, sem rastrear você\n\nPor enquanto, o Cartons é compatível com a UPS. Mais transportadoras estão a caminho.",
+  "keywords": "ups,encomenda,pacote,entrega,remessa,rastreio,rastreamento,contagem,correio,pedido,chegada,eta",
+  "whatsNew": "Primeira versão. Rastreie pacotes da UPS com contagem regressiva até o dia da entrega.",
+  "name": "Cartons"
+}

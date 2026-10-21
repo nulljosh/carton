@@ -1,0 +1,8 @@
+{
+  "subtitle": "Rastreo sin crear cuenta",
+  "promotionalText": "Pega un número o enlace de rastreo de UPS y Cartons cuenta los días. Sin registro, sin servidores, sin anuncios. Tu lista se sincroniza con iCloud y en ningún otro lado.",
+  "description": "Cartons rastrea tus paquetes y te dice lo primero: cuántos días faltan para que lleguen.\n\nPega un número de rastreo de UPS, o el enlace completo de un correo, y Cartons hace el resto. Lee el estado directamente de UPS, calcula la fecha de entrega y pone una cuenta regresiva junto a cada paquete. Toca uno para ver el último escaneo, el servicio y el destino.\n\nNo necesitas crear una cuenta. Cartons no tiene servidores, así que no hay dónde iniciar sesión ni nada que se pueda filtrar. Tu lista vive en tu teléfono y se sincroniza con tus otros dispositivos mediante iCloud.\n\nCuando llega un paquete, deslízalo al archivo para que la lista se mantenga corta.\n\nQué incluye:\n- Una cuenta regresiva hasta el día de entrega de cada paquete\n- Pega un número o un enlace de rastreo completo; Cartons detecta números de rastreo en tu portapapeles\n- Estado, entrega estimada, último escaneo, servicio y destino\n- Archivo para paquetes entregados\n- Sincronización con iCloud entre tus dispositivos\n- Sin cuenta, sin anuncios, sin rastreo de tu actividad\n\nPor ahora Cartons es compatible con UPS. Pronto habrá más paqueterías.",
+  "keywords": "ups,paquete,envío,entrega,rastreo,seguimiento,cuenta regresiva,correo,pedido,llegada,paquetería,eta",
+  "whatsNew": "Primera versión. Rastrea paquetes de UPS con una cuenta regresiva hasta el día de entrega.",
+  "name": "Cartons"
+}

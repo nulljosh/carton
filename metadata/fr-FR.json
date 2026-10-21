@@ -1,0 +1,8 @@
+{
+  "subtitle": "Suivi de colis sans compte",
+  "promotionalText": "Collez un numéro ou un lien de suivi UPS et Cartons compte les jours. Sans inscription, sans serveur, sans pub. Votre liste se synchronise via iCloud, point.",
+  "description": "Cartons suit vos colis et vous dit d'abord l'essentiel : combien de jours avant leur arrivée.\n\nCollez un numéro de suivi UPS, ou le lien complet reçu par e-mail, et Cartons s'occupe du reste. L'app lit le statut directement chez UPS, calcule la date de livraison et affiche un compte à rebours à côté de chaque colis. Touchez-en un pour voir le dernier scan, le service et la destination.\n\nAucun compte à créer. Cartons n'a pas de serveurs : il n'y a donc rien où se connecter, et rien qui puisse fuiter. Votre liste reste sur votre iPhone et se synchronise avec vos autres appareils via iCloud.\n\nQuand un colis arrive, glissez-le dans les archives pour garder une liste courte.\n\nAu programme :\n- Un compte à rebours jusqu'au jour de livraison pour chaque colis\n- Collez un numéro ou un lien de suivi complet ; Cartons repère les numéros de suivi dans votre presse-papiers\n- Statut, livraison estimée, dernier scan, service et destination\n- Archives pour les colis livrés\n- Synchronisation iCloud entre vos appareils\n- Sans compte, sans pub, sans pistage\n\nCartons prend en charge UPS pour l'instant. D'autres transporteurs arrivent.",
+  "keywords": "ups,colis,livraison,expédition,suivi,tracking,compte à rebours,courrier,commande,arrivée,eta",
+  "whatsNew": "Première version. Suivez vos colis UPS avec un compte à rebours jusqu'au jour de livraison.",
+  "name": "Cartons"
+}

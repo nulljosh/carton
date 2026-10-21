@@ -1,0 +1,8 @@
+{
+  "subtitle": "Seguimiento sin cuenta",
+  "promotionalText": "Pega un número o enlace de seguimiento de UPS y Cartons cuenta los días. Sin registro, sin servidores, sin anuncios. Tu lista se sincroniza por iCloud y nada más.",
+  "description": "Cartons sigue tus paquetes y te dice lo primero: cuántos días faltan para que lleguen.\n\nPega un número de seguimiento de UPS, o el enlace completo de un correo, y Cartons hace el resto. Lee el estado directamente de UPS, calcula la fecha de entrega y pone una cuenta atrás junto a cada paquete. Toca uno para ver el último escaneo, el servicio y el destino.\n\nNo hay que crear ninguna cuenta. Cartons no tiene servidores, así que no hay nada donde iniciar sesión ni nada que se pueda filtrar. Tu lista vive en tu teléfono y se sincroniza con tus otros dispositivos mediante iCloud.\n\nCuando llega un paquete, deslízalo al archivo para que la lista siga siendo corta.\n\nQué incluye:\n- Una cuenta atrás hasta el día de entrega de cada paquete\n- Pega un número o un enlace de seguimiento completo; Cartons detecta números de seguimiento en tu portapapeles\n- Estado, entrega estimada, último escaneo, servicio y destino\n- Archivo para paquetes entregados\n- Sincronización con iCloud entre tus dispositivos\n- Sin cuenta, sin anuncios, sin rastreo\n\nCartons es compatible con UPS por ahora. Pronto habrá más transportistas.",
+  "keywords": "ups,paquete,envío,entrega,seguimiento,rastreo,cuenta atrás,correo,pedido,llegada,mensajería,eta",
+  "whatsNew": "Primera versión. Sigue paquetes de UPS con una cuenta atrás hasta el día de entrega.",
+  "name": "Cartons"
+}
