@@ -70,13 +70,46 @@
   .card { background: var(--card); border-radius: var(--r-card); padding: var(--s5); box-shadow: var(--shadow); }
   .card h3 { margin: 0 0 var(--s2); font-size: var(--size-body); }
   .card p { margin: 0; color: var(--ink2); font-size: var(--size-subhead); line-height: 20px; }
-  footer { text-align: center; color: var(--ink2); font-size: var(--size-footnote); padding: var(--s8) 0 var(--s7); }
-  footer a { color: var(--ink2); }
+  main { position: relative; z-index: 1; }
+
+  /* hero sky: drifting boxes and dotted routes, moved by scene.js at three scroll speeds */
+  .sky { position: absolute; top: 0; left: 0; right: 0; height: 1000px; overflow: hidden; pointer-events: none; z-index: 0;
+         -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+  .sky .layer { position: absolute; inset: 0; will-change: transform; }
+  .sky .b { position: absolute; aspect-ratio: 1; animation: drift ease-in-out infinite alternate; }
+  .sky .lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sky .lines path { fill: none; stroke: var(--kraft-deep); stroke-opacity: .3; stroke-width: 2; stroke-linecap: round;
+                     stroke-dasharray: 1 10; vector-effect: non-scaling-stroke; animation: march 3s linear infinite; }
+  @keyframes drift { from { transform: translateY(-10px) rotate(var(--r)); } to { transform: translateY(10px) rotate(calc(var(--r) + 8deg)); } }
+  @keyframes march { to { stroke-dashoffset: -44; } }
+
+  /* big footer over the kraft shader (scene.js); the gradient is the no-WebGL fallback */
+  .big { position: relative; margin-top: var(--s8); min-height: 520px; display: flex; align-items: flex-end; overflow: hidden;
+         border-radius: 32px 32px 0 0; background: linear-gradient(160deg, #8c5a2c, #33200f); color: #fbe7c2; }
+  .big canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .big::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(28, 15, 5, .6), rgba(28, 15, 5, 0) 65%); }
+  .foot { position: relative; z-index: 1; width: 100%; max-width: 1120px; margin: 0 auto; padding: var(--s8) var(--page) var(--s6); }
+  .word { font-size: clamp(88px, 19vw, 240px); line-height: .85; letter-spacing: -.05em; font-weight: 700; margin: 0 0 var(--s5); }
+  .line { font-size: var(--size-title); line-height: 28px; margin: 0 0 var(--s5); color: rgba(251, 231, 194, .88); }
+  .big nav { display: flex; flex-wrap: wrap; gap: var(--s2); margin: 0 0 var(--s5); }
+  .big nav a { display: inline-flex; align-items: center; height: var(--control); padding: 0 var(--s5); border-radius: var(--r-pill); font-weight: 600;
+               color: #fbe7c2; text-decoration: none; background: rgba(251, 231, 194, .12); border: 1px solid rgba(251, 231, 194, .24);
+               -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .big nav a:hover { background: rgba(251, 231, 194, .22); }
+  .fine { font-size: var(--size-footnote); margin: 0; color: rgba(251, 231, 194, .72); }
   @media (max-width: 480px) { h1 { font-size: 56px; } .route { margin: 0; } }
-  @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .spin, .sky .b, .sky .lines path { animation: none; } }
 </style>
 </head>
 <body>
+<div class="sky" aria-hidden="true">
+  <svg width="0" height="0" style="position:absolute"><symbol id="bx" viewBox="0 0 40 40">
+    <path d="M20 4 36 12 20 20 4 12Z" fill="#e8bd86"/><path d="M4 12 20 20V38L4 30Z" fill="#c88f55"/><path d="M20 20 36 12V30L20 38Z" fill="#a66d3a"/>
+    <path d="M10 9 14 7 30 15 26 17Z" fill="#f0d39d"/></symbol></svg>
+  <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <path d="M-5 72C12 52 22 80 30 58"/><path d="M70 30C78 12 92 40 106 18"/><path d="M68 78C80 64 90 88 105 70"/>
+  </svg>
+</div>
 <main>
   <header class="hero">
     <img src="/icon.png" alt="Cartons app icon, a kraft cardboard box">
@@ -128,11 +161,17 @@
     <div><h2>Meet Tuck</h2><p>Tuck keeps an eye on your boxes so you don't have to. You'll find it waving in the app.</p></div>
   </section>
 
-  <footer>
-    <p>Cartons supports UPS today. More carriers are coming.</p>
-    <p><a href="/support">Support</a> · <a href="/privacy">Privacy</a> · <a href="https://github.com/nulljosh/cartons">Source on GitHub</a> · MIT License · 2026 Joshua Trommel</p>
-  </footer>
 </main>
+<footer class="big">
+  <canvas aria-hidden="true"></canvas>
+  <div class="foot">
+    <p class="word">Cartons</p>
+    <p class="line">Days until it shows up. UPS today, more carriers soon.</p>
+    <nav aria-label="Footer"><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/brand/">Brand</a><a href="https://github.com/nulljosh/cartons">Source</a></nav>
+    <p class="fine">MIT License · 2026 Joshua Trommel</p>
+  </div>
+</footer>
 <script src="/app.js"></script>
+<script src="/scene.js"></script>
 </body>
 </html>
