@@ -48,7 +48,7 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .route { margin: 0 calc(-1 * var(--page)); }
-  .route img { width: 100%; display: block; border-radius: var(--r-card); }
+  .route img { width: 100%; height: auto; display: block; border-radius: var(--r-card); box-shadow: var(--shadow); }
   h2 { font-size: var(--size-large-title); line-height: 41px; letter-spacing: -0.02em; margin: var(--s7) 0 var(--s4); }
   .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s4); }
   @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
@@ -105,11 +105,22 @@
 </head>
 <body>
 <div class="sky" aria-hidden="true">
-  <svg width="0" height="0" style="position:absolute"><symbol id="bx" viewBox="0 0 40 40">
-    <path d="M20 4 36 12 20 20 4 12Z" fill="#e8bd86"/><path d="M4 12 20 20V38L4 30Z" fill="#c88f55"/><path d="M20 20 36 12V30L20 38Z" fill="#a66d3a"/>
-    <path d="M10 9 14 7 30 15 26 17Z" fill="#f0d39d"/></symbol>
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <linearGradient id="bx-t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2cf9c"/><stop offset="1" stop-color="#dcab6f"/></linearGradient>
+    <linearGradient id="bx-l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cf9a62"/><stop offset="1" stop-color="#b47b44"/></linearGradient>
+    <linearGradient id="bx-r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a66d3a"/><stop offset="1" stop-color="#7f5028"/></linearGradient></defs>
+  <symbol id="bx" viewBox="0 0 40 40">
+    <path d="M20 4 36 12V30L20 38 4 30V12Z" fill="#6e4523"/>
+    <path d="M20 4.8 35.2 12.4 20 20 4.8 12.4Z" fill="url(#bx-t)"/>
+    <path d="M4.8 12.4 20 20V37.2L4.8 29.6Z" fill="url(#bx-l)"/>
+    <path d="M20 20 35.2 12.4V29.6L20 37.2Z" fill="url(#bx-r)"/>
+    <path d="M24 26.5 34 21.5M24 30 34 25" stroke="#6e4523" stroke-opacity=".25" stroke-width=".5"/>
+    <path d="M10.4 9.6 14.4 7.6 30.4 15.6 26.4 17.6Z" fill="#f6dcaa"/><path d="M26.4 17.6 30.4 15.6V20.4L26.4 22.4Z" fill="#e2c086"/>
+    <path d="M4.8 12.4 20 4.8 35.2 12.4" fill="none" stroke="#fff3dc" stroke-opacity=".75" stroke-width=".7" stroke-linejoin="round"/>
+    <path d="M20 20V37.2" stroke="#fff3dc" stroke-opacity=".35" stroke-width=".5"/></symbol>
   <symbol id="bxl" viewBox="0 0 40 40"><use href="#bx"/>
-    <path d="M23 25 31 21V26L23 30Z" fill="#fbfaf5"/><path d="M24.5 26.6 29.5 24.1M24.5 28.1 28 26.4" stroke="#2b2b2b" stroke-width=".7" stroke-linecap="round"/></symbol></svg>
+    <path d="M8 20.5 15.5 24.2V30.4L8 26.7Z" fill="#fbfaf5"/>
+    <path d="M9.4 23 9.4 26.4M10.6 23.6 10.6 27M12 24.3 12 27.7M13.4 25 13.4 28.4M14.4 25.5 14.4 28.9" stroke="#2b2b2b" stroke-width=".55"/></symbol></svg>
   <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
     <path d="M-5 72C12 52 22 80 30 58"/><path d="M70 30C78 12 92 40 106 18"/><path d="M68 78C80 64 90 88 105 70"/>
   </svg>
@@ -130,7 +141,9 @@
     <ul id="list" aria-live="polite"></ul>
   </section>
 
-  <section class="route"><img src="/cover.jpg" alt="A dotted route from Louisville, Kentucky to Vancouver, British Columbia with a box partway along it" loading="lazy"></section>
+  <section class="route" aria-label="A box travelling the dotted route from Louisville, Kentucky to Vancouver, British Columbia">
+    <img src="/map.svg" width="960" height="540" alt="Map: a box on its way from Louisville, Kentucky to Vancouver, British Columbia">
+  </section>
 
   <h2>A tracker, and nothing else.</h2>
   <div class="grid">
