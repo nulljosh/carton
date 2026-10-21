@@ -58,7 +58,8 @@
   /* the map is the hero's ground: it scrolls slower than the page (scene.js) under a paper veil so the title reads */
   .backdrop { position: absolute; top: 0; left: 0; right: 0; height: 1100px; overflow: hidden; pointer-events: none; z-index: 0;
               -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
-  .ground { position: absolute; left: 50%; top: -40px; width: max(1500px, 125vw); margin-left: calc(max(1500px, 125vw) / -2); aspect-ratio: 960 / 540; will-change: transform; transition: translate .8s cubic-bezier(.3, 0, .2, 1); }
+  .ground { position: absolute; left: 50%; top: -40px; width: max(1500px, 125vw); margin-left: calc(max(1500px, 125vw) / -2); aspect-ratio: 960 / 540; will-change: transform; transition: translate .8s cubic-bezier(.3, 0, .2, 1);
+            -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); }  /* feathered edges, no hard line */
   .ground img, .ground svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .ground img { opacity: .75; }
   /* the live trip, drawn by app.js: last scan, dotted line ahead, destination pulse */
