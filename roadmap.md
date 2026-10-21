@@ -20,7 +20,7 @@ One number first: days until it shows up. Everything below serves that.
 - [ ] If review rejects for "couldn't test" (2.1): reply with how to get a live UPS number, never Joshua's own
 
 ## v1 to v10: the tracker people keep
-- v2 Notifications when the status changes (background refresh)
+- [x] v2 Notifications when the status changes (iOS background refresh every 30 min or so; Mac on open). Banner still to be seen on a real device
 - v3 Widgets: next delivery on the home and lock screen
 - v4 Share sheet: send a tracking link from Mail or Safari straight in
 - v5 Live Activity for out-for-delivery day

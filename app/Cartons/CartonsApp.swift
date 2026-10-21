@@ -1,11 +1,15 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct CartonsApp: App {
     @State private var store = Store()
+    @Environment(\.scenePhase) private var phase
+    private static let banners = Banners()
 
     init() {
         Brand.registerFonts()
+        UNUserNotificationCenter.current().delegate = Self.banners
         let args = ProcessInfo.processInfo.arguments
         if args.contains("-onboarding") { UserDefaults.standard.set(false, forKey: "onboarded") }  // QA hooks
         #if DEBUG
@@ -25,7 +29,20 @@ struct CartonsApp: App {
         }
         #if os(macOS)
         .defaultSize(width: 520, height: 760)
+        #else
+        .onChange(of: phase) { _, p in if p == .background { Store.scheduleRefresh() } }
+        .backgroundTask(.appRefresh(Store.refreshID)) {
+            Store.scheduleRefresh()
+            await store.refreshAll()
+        }
         #endif
+    }
+}
+
+/// Shows a package's notification as a banner even while Cartons is open.
+private final class Banners: NSObject, UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ c: UNUserNotificationCenter, willPresent n: UNNotification) async -> UNNotificationPresentationOptions {
+        [.banner, .list, .sound]
     }
 }
 

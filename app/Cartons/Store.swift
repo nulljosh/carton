@@ -1,5 +1,9 @@
 import Foundation
 import Observation
+import UserNotifications
+#if os(iOS)
+import BackgroundTasks
+#endif
 
 struct Parcel: Codable, Identifiable, Hashable {
     var number: String
@@ -102,6 +106,7 @@ final class Store {
         if !parcels.contains(where: { $0.number == n }) {
             parcels.insert(Parcel(number: n, name: name), at: 0)
             save()
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }  // asks once, on the first add
         }
         Task { await refresh(n) }
         return true
@@ -140,13 +145,40 @@ final class Store {
     func refresh(_ n: String) async {
         guard !isDemo else { return }
         do {
-            statuses[n] = try await UPSPage().fetch(n)
+            let s = try await UPSPage().fetch(n)
+            statuses[n] = s
+            notifyIfMoved(n, s)
             errors[n] = nil
             checked[n] = .now
         } catch {
             errors[n] = "UPS didn't answer. Pull to retry."
         }
     }
+
+    /// One notification when a package's status changes between checks ("On the Way" to "Out for Delivery").
+    private func notifyIfMoved(_ n: String, _ s: Status) {
+        var seen = UserDefaults.standard.dictionary(forKey: "lastStatus") as? [String: String] ?? [:]
+        let old = seen[n]
+        seen[n] = s.status
+        UserDefaults.standard.set(seen, forKey: "lastStatus")
+        guard let old, old != s.status else { return }
+        let c = UNMutableNotificationContent()
+        let name = parcels.first { $0.number == n }?.name ?? ""
+        c.title = name.isEmpty ? "Your package" : name
+        c.body = s.delivered ? "Delivered. It's here." : s.status
+        c.sound = .default
+        UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "\(n)-\(s.status)", content: c, trigger: nil))
+    }
+
+    #if os(iOS)
+    nonisolated static let refreshID = "com.nulljosh.carton.refresh"
+    /// iOS picks the actual time; 30 minutes is the earliest we ask for.
+    nonisolated static func scheduleRefresh() {
+        let r = BGAppRefreshTaskRequest(identifier: refreshID)
+        r.earliestBeginDate = .now.addingTimeInterval(30 * 60)
+        try? BGTaskScheduler.shared.submit(r)
+    }
+    #endif
 
     func save() {
         guard !isDemo else { return }

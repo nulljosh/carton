@@ -12,6 +12,13 @@ targets:
       - path: fonts
         includes: ["*.ttf"]
         buildPhase: resources
+    info:
+      path: app/Info.plist
+      properties:
+        BGTaskSchedulerPermittedIdentifiers: [com.nulljosh.carton.refresh]
+        UIBackgroundModes: [fetch]
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
     entitlements:
       path: app/Cartons.entitlements
       properties:
