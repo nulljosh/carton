@@ -4,11 +4,13 @@ import SwiftUI
 struct Mascot: View {
     var size: CGFloat = 200
     var lively = true  // blinks, waves its flaps and bobs
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1 / 30, paused: !lively)) { ctx in
-            let t = lively ? ctx.date.timeIntervalSinceReferenceDate : 0
-            let blink = lively && t.truncatingRemainder(dividingBy: 3.6) < 0.14
+        let moving = lively && !reduceMotion
+        TimelineView(.animation(minimumInterval: 1 / 30, paused: !moving)) { ctx in
+            let t = moving ? ctx.date.timeIntervalSinceReferenceDate : 0
+            let blink = moving && t.truncatingRemainder(dividingBy: 3.6) < 0.14
             let wave = sin(t * 3.2) * 9
             let bob = -abs(sin(t * 2.4)) * 5
             ZStack {
@@ -122,6 +124,8 @@ struct Onboarding: View {
                 }
             }
             .padding(.bottom, 24)
+            .accessibilityElement()
+            .accessibilityLabel("Page \(page + 1) of \(pages.count + 1)")
             Button { last ? done() : go(1) } label: {
                 Text(last ? "Start tracking" : "Next").font(.carton(.headline, "Semibold")).foregroundStyle(.white)
                     .frame(maxWidth: .infinity, minHeight: 48).background(Capsule().fill(Brand.accent)).contentShape(Capsule())
@@ -161,6 +165,7 @@ struct Onboarding: View {
 private struct Glyph: View {
     let name: String
     @State private var ring = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -168,9 +173,10 @@ private struct Glyph: View {
             Circle().fill(Brand.accent.opacity(0.12)).frame(width: 180, height: 180)
             TimelineView(.periodic(from: .now, by: 1.8)) { ctx in
                 Image(systemName: name).font(.system(size: 76, weight: .semibold)).foregroundStyle(Brand.accent)
-                    .symbolEffect(.bounce, value: ctx.date)
+                    .symbolEffect(.bounce, value: reduceMotion ? .distantPast : ctx.date)
             }
         }
-        .onAppear { withAnimation(.easeOut(duration: 1.8).repeatForever(autoreverses: false)) { ring = true } }
+        .accessibilityHidden(true)
+        .onAppear { if !reduceMotion { withAnimation(.easeOut(duration: 1.8).repeatForever(autoreverses: false)) { ring = true } } }
     }
 }

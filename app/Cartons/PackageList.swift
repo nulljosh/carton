@@ -18,7 +18,7 @@ struct PackageList: View {
                     } else {
                         ContentUnavailableView {
                             VStack(spacing: 12) {
-                                Mascot(size: 140)
+                                Mascot(size: 140).accessibilityHidden(true)
                                 Text("No packages").font(.carton(.title2, "Bold"))
                             }
                         } description: {
@@ -71,6 +71,7 @@ struct PackageList: View {
 
 struct Row: View {
     @Environment(Store.self) private var store
+    @Environment(\.dynamicTypeSize) private var typeSize  // the largest sizes wrap instead of truncating
     let parcel: Parcel
 
     private var status: Status? { store.statuses[parcel.number] }
@@ -78,13 +79,24 @@ struct Row: View {
     var body: some View {
         HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(parcel.name.isEmpty ? parcel.number : parcel.name).font(.carton(.headline, "Semibold")).lineLimit(1)
-                Text(subtitle).font(.carton(.subheadline)).foregroundStyle(.secondary).lineLimit(2)
+                Text(parcel.name.isEmpty ? parcel.number : parcel.name).font(.carton(.headline, "Semibold")).lineLimit(typeSize.isAccessibilitySize ? nil : 1)
+                Text(subtitle).font(.carton(.subheadline)).foregroundStyle(.secondary).lineLimit(typeSize.isAccessibilitySize ? nil : 2)
             }
             Spacer(minLength: 0)
             countdown
         }
         .padding(.vertical, 8)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(spoken)
+    }
+
+    /// One VoiceOver sentence per row: "Running shoes, On the Way, 2 days".
+    private var spoken: String {
+        let name = parcel.name.isEmpty ? "Package" : parcel.name
+        guard let s = status else { return "\(name), \(subtitle)" }
+        if s.delivered { return "\(name), delivered" }
+        guard let d = s.daysLeft else { return "\(name), \(s.status)" }
+        return "\(name), \(s.status), " + (d <= 0 ? "arriving today" : d == 1 ? "1 day" : "\(d) days")
     }
 
     private var subtitle: String {
@@ -124,7 +136,7 @@ struct Detail: View {
             if status == nil, let e = store.errors[parcel.number] {
                 Section {
                     VStack(spacing: 12) {
-                        Mascot(size: 120, lively: false)
+                        Mascot(size: 120, lively: false).accessibilityHidden(true)
                         Text("Tuck couldn't reach UPS").font(.carton(.headline, "Semibold"))
                         Text(e).font(.carton(.subheadline)).foregroundStyle(.secondary).multilineTextAlignment(.center)
                     }
@@ -134,7 +146,7 @@ struct Detail: View {
             if let s = status, s.delivered {
                 Section {
                     VStack(spacing: 12) {
-                        Mascot(size: 140, lively: !celebrated.contains(parcel.number))  // waves the first time only
+                        Mascot(size: 140, lively: !celebrated.contains(parcel.number)).accessibilityHidden(true)  // waves the first time only
                         Text("It's here").font(.carton(.title2, "Bold"))
                         if let eta = s.eta { Text(eta).font(.carton(.subheadline)).foregroundStyle(.secondary) }
                         if !current.isArchived {
@@ -158,6 +170,7 @@ struct Detail: View {
                         Text(d <= 0 ? "arriving" : d == 1 ? "day to go" : "days to go").font(.carton(.subheadline, "Medium")).foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity).padding(.vertical, 16)
+                    .accessibilityElement(children: .combine)
                 }
             }
             if let steps = status?.steps, !steps.isEmpty {

@@ -7,24 +7,22 @@ One number first: days until it shows up. Everything below serves that.
 - [ ] If review rejects for "couldn't test" (2.1): reply with how to get a live UPS number, never Joshua's own
 
 ## v1 to v10: the tracker people keep
-- v3 Widgets: next delivery on the home and lock screen
+- v3 Widgets: next delivery on the home and lock screen (blocked: the App Group needs Joshua to run `asc web auth login` himself)
 - v4 Share sheet: send a tracking link from Mail or Safari straight in
 - v5 Live Activity for out-for-delivery day
-- v6 Canada Post and USPS
+- v6 Canada Post and USPS (Canada Post 403s plain requests, so it needs the WebKit reader; waiting on one real Canada Post number to build against)
 - v7 FedEx and DHL
 - v8 Amazon order links
-- v9 Siri and Shortcuts: "when is my package coming"
 - v10 Apple Watch: the countdown on your wrist
 
 ## v10 to v30: every carrier, every device
 - v12 Mail scanning: find tracking numbers in your inbox, on device, opt in
 - v15 Map of the route with every scan as a stop
 - v18 iPad layout with a sidebar
-- v20 Calendar: delivery day as an all-day event
 - v22 Delivery photos and signatures where the carrier shows them
 - v25 Thirty carriers through one reader per carrier, each with captured page text in the test
 - v28 Translations, every interface string in 19 languages
-- v30 Accessibility audit: VoiceOver walkthrough, Dynamic Type to the largest size
+- v30 Accessibility: a real-device VoiceOver walkthrough is left (rows read as one sentence, Tuck hidden where text says it, reduced motion stops Tuck and the glyphs, largest Dynamic Type wraps)
 
 ## v30 to v60: households and history
 - v35 Shared lists for a household through iCloud sharing
