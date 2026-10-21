@@ -10,9 +10,10 @@
     const few = innerWidth < 600;  // phones get half the boxes
     // far boxes lag the page most and blur a little; near ones nearly keep up and cast a shadow
     const depths = [
-      { cls: 'far', n: 12, size: 18, lag: 0.6, o: 0.35, tilt: 6 },
-      { cls: 'mid', n: 9, size: 30, lag: 0.4, o: 0.6, tilt: 12 },
-      { cls: 'near', n: 6, size: 48, lag: 0.2, o: 0.9, tilt: 22 },
+      // lag > 0 trails the page, lag < 0 outruns it: the near layer flies past the content
+      { cls: 'far', n: 12, size: 18, lag: 0.7, o: 0.35, tilt: 10, spin: 0.02 },
+      { cls: 'mid', n: 9, size: 32, lag: 0.35, o: 0.6, tilt: 20, spin: 0.06 },
+      { cls: 'near', n: 6, size: 64, lag: -0.35, o: 0.95, tilt: 36, spin: 0.12 },
     ];
     const layers = depths.map(d => {
       const layer = document.createElement('div');
@@ -26,10 +27,11 @@
         b.innerHTML = `<use href="#${rnd() < 0.35 ? 'bxl' : 'bx'}"/>`;  // about a third carry a shipping label
         b.style.cssText = `left:${x.toFixed(1)}%;top:${(rnd() * 92).toFixed(1)}%;width:${d.size}px;opacity:${d.o};` +
           `animation-duration:${(5 + rnd() * 5).toFixed(1)}s;animation-delay:${(-rnd() * 10).toFixed(1)}s;--r:${Math.round(rnd() * 40 - 20)}deg`;
+        b.dataset.spin = ((rnd() < 0.5 ? -1 : 1) * d.spin * (0.6 + rnd() * 0.8)).toFixed(3);  // own speed and direction
         layer.append(b);
       }
       sky.append(layer);
-      return { layer, lag: d.lag, tilt: d.tilt };
+      return { layer, lag: d.lag, tilt: d.tilt, boxes: [...layer.children] };
     });
     if (!still) {
       // eased toward the target each frame, so a flick of the wheel glides instead of stepping
@@ -42,8 +44,11 @@
           now[k] = Math.abs(d) < 0.05 ? goal[k] : now[k] + d * 0.12;
           if (now[k] !== goal[k]) moving = true;
         }
-        if (now.y < 1400) for (const { layer, lag, tilt } of layers)
+        if (now.y < 1400) for (const { layer, lag, tilt, boxes } of layers) {
           layer.style.transform = `translate3d(${(now.px * tilt).toFixed(2)}px,${(now.y * lag + now.py * tilt * 0.6).toFixed(2)}px,0)`;
+          // the individual rotate property stacks on top of the CSS drift animation's transform
+          for (const b of boxes) b.style.rotate = `${(now.y * b.dataset.spin).toFixed(2)}deg`;
+        }
         running = moving;
         if (moving) requestAnimationFrame(frame);
       };
