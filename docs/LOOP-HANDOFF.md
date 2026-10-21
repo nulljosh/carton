@@ -14,7 +14,8 @@ Rules for every tick:
 - Review risk: guideline 5.2.2, because the app reads UPS's public tracking page. Fallback is 17TRACK's API. If Apple says it could not test (2.1), reply with how to get a live UPS number, never one of ours.
 - Built for 1.1 but not in a build yet: Tuck in the empty Packages list with its Add button, a "Checked" time on each package, a friendly error when UPS does not answer, Mac keys on onboarding (Return and Esc), the "It's here" celebration with Archive, haptics, notifications when a status changes (iOS background refresh, Mac on open), Tuck as an alternate app icon picked in Settings, the landing parallax pass, and the Apache 2.0 license.
 - Not yet seen on a real device: the status-change notification banner.
-- Mid-edit at checkpoint, not finished and not part of this handoff: `app/Cartons/Store.swift` (modified) and `app/Cartons/Shortcuts.swift` (new). The next tick reads both first, finishes them with a QA pass or leaves them alone, and never commits them half-done.
+- Landed on main while this checkpoint ran, from the live loop: 793efb7 (Siri and Shortcuts answer "when is my package coming" from the last check) and 21d4947 (landing sky). The roadmap still lists v9 as open, so the next tick checks what 793efb7 covers before starting v9. This checkpoint did not check either one.
+- `web/index.html` has uncommitted edits from another session. Leave them alone unless this tick made them.
 - Repo `nulljosh/cartons`, folder `~/Documents/Code/cartons`. App Store record 6825115360, bundle `com.nulljosh.carton`, SKU `carton`. Web at cartons.jaybulb.com. The web deploy was not re-checked at this checkpoint, so confirm it matches `main` before calling a web item done.
 
 ## Next, in order
