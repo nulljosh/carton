@@ -77,6 +77,8 @@
          -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
   .sky .layer { position: absolute; inset: 0; will-change: transform; }
   .sky .b { position: absolute; aspect-ratio: 1; animation: drift ease-in-out infinite alternate; }
+  .sky .far { filter: blur(.8px); }
+  .sky .near .b { filter: drop-shadow(0 8px 10px rgba(60, 35, 10, .18)); }
   .sky .lines { position: absolute; inset: 0; width: 100%; height: 100%; }
   .sky .lines path { fill: none; stroke: var(--kraft-deep); stroke-opacity: .3; stroke-width: 2; stroke-linecap: round;
                      stroke-dasharray: 1 10; vector-effect: non-scaling-stroke; animation: march 3s linear infinite; }
@@ -105,7 +107,9 @@
 <div class="sky" aria-hidden="true">
   <svg width="0" height="0" style="position:absolute"><symbol id="bx" viewBox="0 0 40 40">
     <path d="M20 4 36 12 20 20 4 12Z" fill="#e8bd86"/><path d="M4 12 20 20V38L4 30Z" fill="#c88f55"/><path d="M20 20 36 12V30L20 38Z" fill="#a66d3a"/>
-    <path d="M10 9 14 7 30 15 26 17Z" fill="#f0d39d"/></symbol></svg>
+    <path d="M10 9 14 7 30 15 26 17Z" fill="#f0d39d"/></symbol>
+  <symbol id="bxl" viewBox="0 0 40 40"><use href="#bx"/>
+    <path d="M23 25 31 21V26L23 30Z" fill="#fbfaf5"/><path d="M24.5 26.6 29.5 24.1M24.5 28.1 28 26.4" stroke="#2b2b2b" stroke-width=".7" stroke-linecap="round"/></symbol></svg>
   <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
     <path d="M-5 72C12 52 22 80 30 58"/><path d="M70 30C78 12 92 40 106 18"/><path d="M68 78C80 64 90 88 105 70"/>
   </svg>

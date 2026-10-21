@@ -7,35 +7,53 @@
   if (sky) {
     let seed = 11;
     const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-    // far boxes lag the page most; near ones nearly keep up
-    const depths = [{ n: 12, size: 18, lag: 0.6, o: 0.35 }, { n: 9, size: 30, lag: 0.4, o: 0.6 }, { n: 6, size: 48, lag: 0.2, o: 0.9 }];
+    const few = innerWidth < 600;  // phones get half the boxes
+    // far boxes lag the page most and blur a little; near ones nearly keep up and cast a shadow
+    const depths = [
+      { cls: 'far', n: 12, size: 18, lag: 0.6, o: 0.35, tilt: 6 },
+      { cls: 'mid', n: 9, size: 30, lag: 0.4, o: 0.6, tilt: 12 },
+      { cls: 'near', n: 6, size: 48, lag: 0.2, o: 0.9, tilt: 22 },
+    ];
     const layers = depths.map(d => {
       const layer = document.createElement('div');
-      layer.className = 'layer';
-      for (let i = 0; i < d.n; i++) {
+      layer.className = 'layer ' + d.cls;
+      const n = few ? (d.cls === 'near' ? 0 : Math.ceil(d.n / 2)) : d.n;  // big boxes crowd a phone's single column
+      for (let i = 0; i < n; i++) {
         let x = rnd() * 100;
         if (x > 32 && x < 68) x = x < 50 ? x - 32 : x + 32;  // keep the middle clear for the title
         const b = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         b.setAttribute('class', 'b');
-        b.innerHTML = '<use href="#bx"/>';
+        b.innerHTML = `<use href="#${rnd() < 0.35 ? 'bxl' : 'bx'}"/>`;  // about a third carry a shipping label
         b.style.cssText = `left:${x.toFixed(1)}%;top:${(rnd() * 92).toFixed(1)}%;width:${d.size}px;opacity:${d.o};` +
           `animation-duration:${(5 + rnd() * 5).toFixed(1)}s;animation-delay:${(-rnd() * 10).toFixed(1)}s;--r:${Math.round(rnd() * 40 - 20)}deg`;
         layer.append(b);
       }
       sky.append(layer);
-      return { layer, lag: d.lag };
+      return { layer, lag: d.lag, tilt: d.tilt };
     });
     if (!still) {
-      let queued = false;
-      addEventListener('scroll', () => {
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(() => {
-          queued = false;
-          const y = scrollY;
-          if (y > 1400) return;
-          for (const { layer, lag } of layers) layer.style.transform = `translate3d(0,${(y * lag).toFixed(1)}px,0)`;
-        });
+      // eased toward the target each frame, so a flick of the wheel glides instead of stepping
+      const now = { y: scrollY, px: 0, py: 0 }, goal = { y: scrollY, px: 0, py: 0 };
+      let running = false;
+      const frame = () => {
+        let moving = false;
+        for (const k in now) {
+          const d = goal[k] - now[k];
+          now[k] = Math.abs(d) < 0.05 ? goal[k] : now[k] + d * 0.12;
+          if (now[k] !== goal[k]) moving = true;
+        }
+        if (now.y < 1400) for (const { layer, lag, tilt } of layers)
+          layer.style.transform = `translate3d(${(now.px * tilt).toFixed(2)}px,${(now.y * lag + now.py * tilt * 0.6).toFixed(2)}px,0)`;
+        running = moving;
+        if (moving) requestAnimationFrame(frame);
+      };
+      const kick = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
+      addEventListener('scroll', () => { goal.y = scrollY; kick(); }, { passive: true });
+      // the sky leans away from the pointer on desktop; touch screens skip it
+      if (matchMedia('(pointer: fine)').matches) addEventListener('pointermove', e => {
+        goal.px = -(e.clientX / innerWidth - 0.5) * 2;
+        goal.py = -(e.clientY / innerHeight - 0.5) * 2;
+        kick();
       }, { passive: true });
     }
   }
