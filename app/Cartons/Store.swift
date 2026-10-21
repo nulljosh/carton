@@ -150,6 +150,10 @@ final class Store {
             notifyIfMoved(n, s)
             errors[n] = nil
             checked[n] = .now
+            // last known delivery day, so Siri can answer without loading UPS's page
+            var etas = UserDefaults.standard.dictionary(forKey: "lastETA") as? [String: Date] ?? [:]
+            etas[n] = s.delivered ? nil : s.etaDate
+            UserDefaults.standard.set(etas, forKey: "lastETA")
         } catch {
             errors[n] = "UPS didn't answer. Pull to retry."
         }
