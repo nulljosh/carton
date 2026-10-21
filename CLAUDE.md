@@ -25,5 +25,8 @@ Use the dedicated `Cartons-QA-iPad` simulator (A2D1628A), not the shared booted 
 ## App Store
 Record 6825115360, bundle `com.nulljosh.carton` (universal), SKU carton. Renamed Carton to **Cartons** everywhere on 2026-10-20 because "Carton" is held by another account in App Store Connect. Kept on purpose: bundle id `com.nulljosh.carton` (bound to the record), SKU carton, the Worker name `carton`, and the web storage key `carton.parcels` (renaming it would wipe browser lists). carton.jaybulb.com redirects to cartons.jaybulb.com. Paid Apps agreement accepted 2026-10-20.
 
+## The loop
+`docs/LOOP-HANDOFF.md` holds the loop's rules, where things stand and the restart prompt. Read it before restarting the loop. `roadmap.md` is the queue.
+
 ## Not done
-See `roadmap.md`: icon layers, Mac polish, App Store record (probe the name Cartons first).
+See `roadmap.md`.
