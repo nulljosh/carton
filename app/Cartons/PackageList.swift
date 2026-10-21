@@ -111,6 +111,9 @@ struct Detail: View {
     let parcel: Parcel
     @State private var renaming = false
     @State private var newName = ""
+    @State private var cheer = false
+    @AppStorage("celebrated") private var celebrated = ""  // numbers Tuck already cheered for, comma-joined
+    @Environment(\.dismiss) private var dismiss
 
     private var status: Status? { store.statuses[parcel.number] }
     private var current: Parcel { store.parcels.first { $0.number == parcel.number } ?? parcel }
@@ -126,6 +129,26 @@ struct Detail: View {
                     }
                     .frame(maxWidth: .infinity).padding(.vertical, 16)
                 }
+            }
+            if let s = status, s.delivered {
+                Section {
+                    VStack(spacing: 12) {
+                        Mascot(size: 140, lively: !celebrated.contains(parcel.number))  // waves the first time only
+                        Text("It's here").font(.carton(.title2, "Bold"))
+                        if let eta = s.eta { Text(eta).font(.carton(.subheadline)).foregroundStyle(.secondary) }
+                        if !current.isArchived {
+                            Button { store.setArchived(current, true); dismiss() } label: {
+                                Text("Archive it").font(.carton(.headline, "Semibold")).foregroundStyle(.white)
+                                    .padding(.horizontal, 24).frame(minHeight: 48).background(Capsule().fill(Brand.accent)).contentShape(Capsule())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .frame(maxWidth: .infinity).padding(.vertical, 16)
+                    .onAppear { if !celebrated.contains(parcel.number) { cheer = true } }
+                    .onDisappear { if !celebrated.contains(parcel.number) { celebrated += ",\(parcel.number)" } }
+                }
+                .sensoryFeedback(.success, trigger: cheer) { _, new in new }
             }
             if let s = status, let d = s.daysLeft, !s.delivered {
                 Section {

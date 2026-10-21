@@ -15,8 +15,8 @@ One number first: days until it shows up. Everything below serves that.
 - [x] "Checked" time on each package (pull to refresh was already there)
 - [x] Friendly error when UPS doesn't answer: Tuck, the reason, "Open on ups.com" below
 - [x] Fix: a delivered page with no date showed "Latest Update" (app) or the number (web) as the date; both parsers now need a real date, with a test
-- [ ] Delivered state: Tuck celebrates once, then offers Archive
-- [x] Haptic on add (iOS); delivered haptic waits for the celebrate-once state
+- [x] Delivered state: "It's here", Tuck waves and a haptic fires the first time only, then "Archive it"
+- [x] Haptics on add and on the first "It's here" (iOS)
 - [ ] If review rejects for "couldn't test" (2.1): reply with how to get a live UPS number, never Joshua's own
 
 ## v1 to v10: the tracker people keep
