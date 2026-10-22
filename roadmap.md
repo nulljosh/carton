@@ -36,3 +36,6 @@ One number first: days until it shows up. Everything below serves that.
 - v80 Web app at parity with iOS, synced through iCloud web
 - v90 Open data export, JSON and CSV
 - v100 Ten years of packages in one calm list
+
+## Ingested 2026-10-22
+- [ ] Apple emailed "There's an issue with your Cartons (iOS) submission" (submitted Oct 20, 2026 05:31 PM PDT by API key, 1 item, submission ID 47d903af-ce77-450c-b448-ac44199d8411, App Version 1.0.0 for iOS). The reason is cut off in the screenshot (/Users/joshua/Documents/Code/notes/attachments/2026-10-22/asc-1.png). Read it with `asc web review show`, fix, resubmit. Mac 1.0.0 was submitted separately and is not named in this email.
